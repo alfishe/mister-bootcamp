@@ -1,4 +1,4 @@
-[← Framework](../README.md)
+[← FPGA Subsystem](../README.md)
 
 # GPO / GPI Registers — Raw HPS↔FPGA Signalling
 

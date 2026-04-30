@@ -1,4 +1,4 @@
-[← Framework](../README.md)
+[← FPGA Subsystem](../README.md)
 
 # HPS_BUS — The 49-Bit Parallel Bus
 

@@ -1,4 +1,4 @@
-[← Hardware Platform](../README.md)
+[← Hardware Platforms](../README.md)
 
 # Cyclone V SoC Physical Memory Map
 

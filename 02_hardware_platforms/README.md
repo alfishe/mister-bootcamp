@@ -1,19 +1,9 @@
-[← Knowledge Base](../README.md)
+# 02 — Hardware Platforms
 
-# Hardware Platform
 
-Physical hardware documentation: the DE10-Nano board, add-on boards (SDRAM, IO, USB Hub), and the Cyclone V SoC memory map as used by MiSTer.
+[← Back to Index](../README.md)
+
 
 ## Articles
 
-| File | Topic | Quality |
-|---|---|---|
-| [platform_architecture.md](platform_architecture.md) | Physical system architecture: board interconnects, power routing, physical data flows | 🔄 Target: Deep |
-| [de10_nano.md](de10_nano.md) | DE10-Nano board reference: Cyclone V 5CSEBA6, DDR3, ADC, HDMI, USB, Arduino header | 📋 Target: Deep |
-| [addon_boards.md](addon_boards.md) | SDRAM board (active/passive), IO board, USB Hub, Direct Video, MT32-Pi | 📋 Target: Adequate |
-| [memory_map.md](memory_map.md) | Cyclone V SoC physical address map | 📋 Target: Deep |
-
-## Cross-References
-
-- [Framework — sys_top.v](../06_fpga_subsystem/README.md) — how the board signals connect to the FPGA fabric
-- [FPGA KB — Intel Cyclone V](https://github.com/alfishe/fpga-bootcamp/blob/main/01_vendors_and_families/altera_intel/)
+* [Memory Map](memory_map.md)

@@ -1,19 +1,9 @@
-[← Knowledge Base](../README.md)
+# 17 — References
 
-# References
 
-Quick-reference tables and lookup material — the pages you bookmark for daily use.
+[← Back to Index](../README.md)
+
 
 ## Articles
 
-| File | Topic | Quality |
-|---|---|---|
-| [uio_command_reference.md](uio_command_reference.md) | Complete UIO/FIO opcode table with bit-level payload detail | 📋 Target: Deep |
-| `memory_map_quick_ref.md` | Condensed Cyclone V SoC address map (one-page version) | 📋 Planned |
-| `conf_str_quick_ref.md` | CONF_STR entry types cheat sheet | 📋 Planned |
-| `ini_variables_quick_ref.md` | MiSTer.ini variable quick reference (alphabetical) | 📋 Planned |
-
-## Cross-References
-
-- [Hardware — Memory Map](../02_hardware_platforms/memory_map.md) — full annotated memory map
-- [Configuration — CONF_STR](../05_configuration/conf_str.md) — detailed CONF_STR documentation
+* [Uio Command Reference](uio_command_reference.md)
