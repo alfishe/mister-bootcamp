@@ -419,3 +419,14 @@ Several projects have attempted to build commercial MiSTer alternatives — most
 | **MiSTer Facebook Group** | https://www.facebook.com/groups/MiSTerFPGA | Community group — news, user showcases, hardware mods |
 | **MiSTer Subreddit** | https://www.reddit.com/r/MiSTerFPGA/ | Reddit community — discussion, news, questions |
 | **Atari Age MiSTer Forum** | https://atariage.com/forums/forum/342-mister/ | Legacy discussion forum — historical threads, deep technical dives |
+
+---
+
+## Read Also
+
+| Document | What it covers |
+|---|---|
+| [Getting Started](getting_started.md) | Persona-based entry points, hardware shopping list, first-boot walkthrough, learning paths |
+| [Platform Architecture](../01_system_architecture/platform_architecture.md) | Deep technical reference: Cyclone V SoC internals, HPS↔FPGA bridges, board stack, data flow pipelines |
+| [Ecosystem & Community Tools](../15_ecosystem/README.md) | Derived projects (MiSTeX, Analogue), hardware accessories, community scripts |
+| [Knowledge Base Index](../README.md) | Full documentation suite index |

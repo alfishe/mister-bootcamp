@@ -474,3 +474,14 @@ FPGA recreation eliminates these variables. The hardware behaves identically eve
 - **SSH access** — script automated test runs against multiple cores
 
 > **Deep dive**: [Platform Overview — Fidelity Milestones](README.md#fidelity-milestones) · [SNAC & LLAPI](../10_input_devices/snac_llapi.md)
+
+---
+
+## Read Also
+
+| Document | What it covers |
+|---|---|
+| [Platform Overview](README.md) | What MiSTer is, historical evolution (Minimig → MiST → MiSTer), preservation philosophy |
+| [Platform Architecture](../01_system_architecture/platform_architecture.md) | Deep technical reference: Cyclone V SoC, HPS↔FPGA bridges, SDRAM architecture, data flow pipelines |
+| [Ecosystem & Community Tools](../15_ecosystem/README.md) | Derived projects, alternative platforms, hardware accessories, community scripts |
+| [Knowledge Base Index](../README.md) | Full documentation suite — all sections and articles |
