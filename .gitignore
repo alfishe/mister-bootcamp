@@ -1,0 +1,18 @@
+# Generated files
+*.o
+*.d
+*.pyc
+__pycache__/
+.DS_Store
+
+# Editor temps
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Build outputs
+output_files/
+db/
+incremental_db/
