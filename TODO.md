@@ -24,9 +24,7 @@
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
 | 1 | `00_overview/README.md` | ✅ | Target: Deep | Evolution from MiST/Minimig, HW vs SW emulation, platform success factors |
-| 2 | `00_overview/start_retro_user.md` | 📋 | Target: Adequate | Retro gamer onboarding, hardware shopping, first core load |
-| 3 | `00_overview/start_linux_dev.md` | 📋 | Target: Adequate | Linux dev path: SSH, cross-compile, HPS binary, custom images |
-| 4 | `00_overview/start_fpga_dev.md` | 📋 | Target: Adequate | FPGA dev path: Template core, Quartus, build→deploy→test |
+| 2 | `00_overview/getting_started.md` | ✅ | Target: Adequate | Persona-based guide: retro gamers, arcade builders, CRT enthusiasts, students, software devs, FPGA engineers, tinkerers, preservationists |
 | 5 | `01_system_architecture/platform_architecture.md` | ✅ | Target: Deep | Abstract SoC concepts, FPGA+HPS pipelines, physical data flows |
 | 6 | `02_hardware_platforms/de10_nano.md` | 📋 | Target: Deep | Physical board reference, specs, pins |
 | 7 | `02_hardware_platforms/addon_boards.md` | 📋 | Target: Adequate | Physical addons: SDRAM, IO board, USB hub, Direct Video |
@@ -79,8 +77,9 @@
 | 34| `14_extensions/retroachievements.md` | 📋 | Target: Deep | odelot fork, DDRAM bridge, rcheevos |
 | 35| `14_extensions/cheats.md` | 📋 | Target: Adequate | Cheat engine, .cht format |
 | 36| `14_extensions/mra_format.md` | 📋 | Target: Deep | MRA XML schema |
-| 37| `15_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
-| 38| `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | Xilinx/Zynq port |
+| 37| `15_ecosystem/README.md` | 🔀 | Target: Adequate | Project catalog index: alternative platforms, commercial products, tools, content |
+| 37a| `15_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
+| 38| `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | SBC+FPGA alternative platform port |
 | 39| `16_advanced_topics/analogue_comparison.md` | 📋 | Target: Adequate | openFPGA vs MiSTer |
 | 40| `17_references/uio_command_reference.md` | 🔀 | Target: Adequate | Command reference |
 

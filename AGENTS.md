@@ -10,12 +10,9 @@
 
 This repository is the **definitive technical reference** for the MiSTer FPGA platform — from the DE10-Nano hardware and Cyclone V SoC architecture through the `sys/` framework, the HPS binary, individual core implementations, and the surrounding ecosystem (RetroAchievements, build tooling, community scripts).
 
-It serves three audiences simultaneously:
-- **Retro gaming enthusiasts** who want to understand what they're running and why it matters
-- **Software / Linux developers** who want to cross-compile, extend the HPS binary, or build custom Linux images
-- **FPGA / HDL engineers** who want to write new cores or modify existing ones
+It serves multiple audiences simultaneously — from retro gamers and arcade builders to CS/EE students, software developers, FPGA engineers, hardware tinkerers, and preservation archivists. See `00_overview/getting_started.md` for the full persona-based entry point matrix.
 
-Every article must be useful to at least one of these audiences, and the Overview section must provide clear entry points for all three.
+Every article must be useful to at least one of these audiences, and the Overview section must provide clear entry points for all of them.
 
 ---
 
@@ -216,11 +213,22 @@ Architectural articles should include a brief comparison section showing how MiS
 - **Software emulation** (RetroArch, MAME, standalone emulators)
 - **Analogue Pocket** (openFPGA framework)
 - **MiST / SiDi** (predecessor platforms)
-- **MiSTeX** (Xilinx/Zynq port)
+- **MiSTeX** (SBC+FPGA alternative platform port)
 
 This is not marketing — it's engineering context that helps readers understand design decisions.
 
-### 5.4 Tone
+### 5.4 Incremental Writing (AI Agents)
+
+AI agents **must not** attempt to generate an entire article in a single pass. Long documents exceed context/token limits and produce truncated or degraded output.
+
+**Required approach:**
+1. Create the file with the header, breadcrumb, and table of contents / section outline
+2. Write each major section as a separate append/edit operation
+3. Verify the document renders correctly after the final section
+
+This applies to any article expected to exceed ~200 lines.
+
+### 5.5 Tone
 
 Technically authoritative but not gatekeepy. Write for people who care about *why* CRTs look different from LCD scalers, not for people who need to be sold on the concept. No marketing fluff, no "easy as 1-2-3" condescension.
 

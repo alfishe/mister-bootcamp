@@ -1,6 +1,6 @@
 # MiSTer FPGA — The Developer's Source of Truth
 
-**From silicon to scanlines**
+**Hardware you can read. Systems you can rewrite.**
 
 > *Everything the wiki summarises but never explains — grounded in Verilog, C, and the actual hardware.*
 >
@@ -10,12 +10,19 @@
 
 ## Quick Start
 
-| You are... | Start here |
-|---|---|
-| 🎮 **Retro gamer / new to MiSTer** | [Getting Started — Retro Gaming](00_overview/start_retro_user.md) |
-| 🐧 **Software / Linux developer** | [Getting Started — Linux Dev](00_overview/start_linux_dev.md) |
-| ⚡ **FPGA / HDL engineer** | [Getting Started — FPGA Dev](00_overview/start_fpga_dev.md) |
-| 🔬 **Want the full architecture** | [Platform Architecture](01_system_architecture/platform_architecture.md) |
+| You are... | What's in it for you | Start here |
+|---|---|---|
+| 🎮 **Retro gamer** | Cycle-accurate classics, zero input lag | [Retro Gaming](00_overview/getting_started.md#-retro-gaming) |
+| 🕹️ **Arcade builder** | MiSTer in a JAMMA cabinet | [Arcade](00_overview/getting_started.md#️-arcade-builder) |
+| 📺 **CRT enthusiast** | Real scanlines, native 15kHz | [Analog Video](00_overview/getting_started.md#-crt--analog-video) |
+| 🎓 **CS / EE student** | Study real CPUs in synthesizable RTL | [Student Path](00_overview/getting_started.md#-student--learner) |
+| 💻 **Software developer** | Hack the ARM Linux control stack | [Software Dev](00_overview/getting_started.md#-software-developer) |
+| ⚡ **FPGA engineer** | Write cores on a mature framework | [FPGA Dev](00_overview/getting_started.md#-fpga--hdl-engineer) |
+| 🔧 **Tinkerer / maker** | Build, solder, 3D-print, mod | [Tinkerer](00_overview/getting_started.md#-tinkerer--maker) |
+| 📡 **Preservationist** | Bit-perfect hardware preservation | [Preservation](00_overview/getting_started.md#-preservationist--archivist) |
+| 🔬 **Full architecture** | Complete technical reference | [Platform Architecture](01_system_architecture/platform_architecture.md) |
+
+**New to MiSTer?** Start with the [Platform Overview](00_overview/README.md) — what it is, how it evolved, and why it matters.
 
 ---
 
@@ -49,10 +56,8 @@
 #### 00 — Overview
 | File | Topic |
 |---|---|
-| [README.md](00_overview/README.md) | Platform overview, evolution, success factors, founder & contributors |
-| [start_retro_user.md](00_overview/start_retro_user.md) | Getting started for retro gamers |
-| [start_linux_dev.md](00_overview/start_linux_dev.md) | Getting started for Linux/software developers |
-| [start_fpga_dev.md](00_overview/start_fpga_dev.md) | Getting started for FPGA engineers |
+| [README.md](00_overview/README.md) | Platform overview, evolution, architecture, success factors, challenges & growing pains |
+| [getting_started.md](00_overview/getting_started.md) | Persona-based getting started — retro gamers, developers, students, builders, preservationists |
 
 #### 01 — System Architecture
 | File | Topic |
@@ -184,7 +189,7 @@
 | File | Topic |
 |---|---|
 | [custom_linux.md](16_advanced_topics/custom_linux.md) | Building custom MiSTer Linux images from scratch |
-| [mistex.md](16_advanced_topics/mistex.md) | MiSTeX: porting MiSTer framework to Xilinx/Zynq |
+| [mistex.md](16_advanced_topics/mistex.md) | MiSTeX: porting MiSTer framework to alternative FPGA boards via SBC+FPGA architecture |
 | [analogue_comparison.md](16_advanced_topics/analogue_comparison.md) | Analogue Pocket openFPGA vs MiSTer comparison |
 
 #### 17 — References
