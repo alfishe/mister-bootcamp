@@ -1,0 +1,80 @@
+# U-Boot FPGA Configuration Script (from 0002 patch)
+# Extracted from include/configs/socfpga_de0_nano_soc.h
+#
+# This script implements distro-boot-compatible FPGA bitstream loading.
+# It scans multiple boot targets (mmc, pxe, dhcp, etc.) to find a
+# .rbf (Raw Binary File) FPGA configuration and load it into the
+# Cyclone V SoC FPGA fabric.
+#
+# Usage in U-Boot shell:
+#   run fpga_cfg
+#
+# Prerequisites:
+#   - FPGA bitstream file named ${board}.rbf (e.g., de0_nano_soc.rbf)
+#     on a bootable partition of the SD/MMC card
+#   - U-Boot compiled with CONFIG_FPGA and CONFIG_FPGA_ALTERA
+
+# ---------------------------------------------------------------------------
+# Main entry point
+# ---------------------------------------------------------------------------
+# Sets default fpga_files to ${board}.rbf if not already defined,
+# then iterates over all boot targets and runs fpga_cfg_<target> for each.
+setenv fpga_cfg \
+    'env exists fpga_files || setenv fpga_files ${board}.rbf; ' \
+    'for target in ${boot_targets}; do ' \
+        'run fpga_cfg_${target}; ' \
+    'done'
+
+# ---------------------------------------------------------------------------
+# MMC target handler (fpga_cfg_mmc0)
+# ---------------------------------------------------------------------------
+# Configures device type to MMC, device number to 0 (first SD card slot),
+# then scans that device for boot partitions containing FPGA bitstreams.
+setenv fpga_cfg_mmc0 \
+    'setenv devnum 0; ' \
+    'setenv devtype mmc; ' \
+    'run scan_dev_for_boot_part_fpga'
+
+# ---------------------------------------------------------------------------
+# Boot partition scanner (scan_dev_for_boot_part_fpga)
+# ---------------------------------------------------------------------------
+# Lists bootable partitions on the current device. If none are marked
+# bootable, defaults to partition 1. For each partition, verifies it
+# has a recognized filesystem, then scans it for FPGA bitstreams.
+setenv scan_dev_for_boot_part_fpga \
+    'part list ${devtype} ${devnum} -bootable devplist; ' \
+    'env exists devplist || setenv devplist 1; ' \
+    'for distro_bootpart in ${devplist}; do ' \
+        'if fstype ${devtype} ${devnum}:${distro_bootpart} bootfstype; then ' \
+            'run scan_dev_for_boot_fpga; ' \
+        'fi; ' \
+    'done'
+
+# ---------------------------------------------------------------------------
+# Boot prefix scanner (scan_dev_for_boot_fpga)
+# ---------------------------------------------------------------------------
+# For the current partition, iterates over standard boot path prefixes
+# (typically "/" and "/boot/") and scans each for FPGA bitstream files.
+setenv scan_dev_for_boot_fpga \
+    'echo Scanning ${devtype} ${devnum}:${distro_bootpart}...; ' \
+    'for prefix in ${boot_prefixes}; do ' \
+        'run scan_dev_for_fpga; ' \
+    'done'
+
+# ---------------------------------------------------------------------------
+# FPGA file scanner / loader (scan_dev_for_fpga)
+# ---------------------------------------------------------------------------
+# Core logic: for each file in ${fpga_files}, check if it exists at
+# ${prefix}${file} on the current device:partition. If found:
+#   1. Load the .rbf into RAM at ${kernel_addr_r}
+#   2. Program the FPGA via "fpga load 0 <addr> <size>"
+#   3. Enable HPS-to-FPGA bridges via "bridge enable"
+setenv scan_dev_for_fpga \
+    'for file in ${fpga_files}; do ' \
+        'if test -e ${devtype} ${devnum}:${distro_bootpart} ${prefix}${file}; then ' \
+            'echo Found FPGA Configuration ${prefix}${file}; ' \
+            'load ${devtype} ${devnum}:${distro_bootpart} ${kernel_addr_r} ${prefix}${file}; ' \
+            'fpga load 0 ${kernel_addr_r} ${filesize}; ' \
+            'bridge enable; ' \
+        'fi; ' \
+    'done'

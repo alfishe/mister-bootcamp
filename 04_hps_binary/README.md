@@ -22,6 +22,6 @@ The ARM-side C++ binary that runs on the Cyclone V HPS under Linux. It handles c
 
 ## Cross-References
 
-- [Framework](../02_framework/README.md) — FPGA-side modules the HPS communicates with
-- [Configuration](../09_configuration/README.md) — CONF_STR, MiSTer.ini, .CFG files
-- [References — UIO Opcodes](../15_references/uio_command_reference.md) — full command protocol
+- [Framework](../06_fpga_subsystem/README.md) — FPGA-side modules the HPS communicates with
+- [Configuration](../05_configuration/README.md) — CONF_STR, MiSTer.ini, .CFG files
+- [References — UIO Opcodes](../17_references/uio_command_reference.md) — full command protocol

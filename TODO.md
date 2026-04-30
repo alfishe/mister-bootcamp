@@ -19,87 +19,70 @@
 
 ---
 
-## Tier 0 — Overview & Entry Points
+## Phase 1 — Foundation (The Physical Layer)
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 0a | `00_overview/platform_architecture.md` | 📋 | Target: Deep | Full system diagrams, layered slices, competitive comparison |
-| 0b | `00_overview/start_retro_user.md` | 📋 | Target: Adequate | Retro gamer onboarding, hardware shopping, first core load |
-| 0c | `00_overview/start_linux_dev.md` | 📋 | Target: Adequate | Linux dev path: SSH, cross-compile, HPS binary, custom images |
-| 0d | `00_overview/start_fpga_dev.md` | 📋 | Target: Adequate | FPGA dev path: Template core, Quartus, build→deploy→test |
+| 1 | `00_overview/README.md` | ✅ | Target: Deep | Evolution from MiST/Minimig, HW vs SW emulation, platform success factors |
+| 2 | `00_overview/start_retro_user.md` | 📋 | Target: Adequate | Retro gamer onboarding, hardware shopping, first core load |
+| 3 | `00_overview/start_linux_dev.md` | 📋 | Target: Adequate | Linux dev path: SSH, cross-compile, HPS binary, custom images |
+| 4 | `00_overview/start_fpga_dev.md` | 📋 | Target: Adequate | FPGA dev path: Template core, Quartus, build→deploy→test |
+| 5 | `01_system_architecture/platform_architecture.md` | ✅ | Target: Deep | Abstract SoC concepts, FPGA+HPS pipelines, physical data flows |
+| 6 | `02_hardware_platforms/de10_nano.md` | 📋 | Target: Deep | Physical board reference, specs, pins |
+| 7 | `02_hardware_platforms/addon_boards.md` | 📋 | Target: Adequate | Physical addons: SDRAM, IO board, USB hub, Direct Video |
 
-## Tier 1 — Platform Foundation
-
-| # | Article | Status | Quality | Notes |
-|---|---|---|---|---|
-| 1 | `01_hardware_platform/de10_nano.md` | 📋 | Target: Deep | Board-level reference |
-| 2 | `01_hardware_platform/addon_boards.md` | 📋 | Target: Adequate | SDRAM, IO board, USB hub, Direct Video |
-| 3 | `03_core_architecture/template_walkthrough.md` | 📋 | Target: Deep | Core developer entry point |
-| 4 | `02_framework/hps_io_module.md` | 📋 | Target: Deep | Central framework module |
-| 5 | `02_framework/sys_top.md` | 📋 | Target: Deep | Top-level hardware abstraction |
-| 6 | `04_hps_binary/architecture.md` | 📋 | Target: Deep | Main_MiSTer module map |
-| 7 | `06_video_audio/hdmi_scaler.md` | 📋 | Target: Deep | ascal.vhd polyphase scaler |
-| 8 | `06_video_audio/audio_pipeline.md` | 📋 | Target: Deep | DAC, I2S, HDMI audio, filters |
-| 9 | `11_save_states/save_state_architecture.md` | 📋 | Target: Deep | DDR3 snapshot/restore, rewind |
-
-## Tier 2 — Per-Core Documentation
+## Phase 2 — Host Software (The ARM/HPS Control Plane)
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 10 | `05_core_catalog/minimig.md` | 📋 | Target: Deep | Cross-link to Amiga Bootcamp (public GitHub) |
-| 11 | `05_core_catalog/ao486.md` | 📋 | Target: Deep | 486SX, IDE DMA, VGA, Sound Blaster |
-| 12 | `05_core_catalog/nes.md` | 📋 | Target: Adequate | Mappers, PPU/APU, iNES/NES 2.0 |
-| 13 | `05_core_catalog/snes.md` | 📋 | Target: Adequate | Coprocessors, 5A22/S-PPU/S-SMP |
-| 14 | `05_core_catalog/genesis.md` | 📋 | Target: Adequate | 68000+Z80, VDP, YM2612, Mega CD, 32X |
-| 15 | `05_core_catalog/psx.md` | 📋 | Target: Adequate | R3000A, GTE, GPU, MDEC, CD-ROM |
-| 16 | `05_core_catalog/n64.md` | 📋 | Target: Adequate | VR4300, RDP/RSP, 8MB RDRAM |
-| 17 | `05_core_catalog/arcade_and_mra.md` | 📋 | Target: Deep | MRA XML, ROM merging, DIP switches |
+| 8 | `03_hps_linux/custom_linux.md` | 📋 | Target: Deep | Buildroot, kernel, U-Boot documentation |
+| 9 | `04_hps_binary/architecture.md` | 📋 | Target: Deep | Main_MiSTer module map |
+| 10| `04_hps_binary/build/overview.md` | 📋 | Target: Deep | ARM toolchain, Makefile, cross-compile |
+| 11| `05_configuration/mister_ini_guide.md` | 📋 | Target: Adequate | User-facing INI guide |
+| 12| `05_configuration/osd.md` | 🔀 | Target: Adequate | OSD rendering and navigation architecture |
 
-## Tier 3 — Platform Extensions
+## Phase 3 — Hardware Emulation (The FPGA Plane)
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 18 | `13_extensions/retroachievements.md` | 📋 | Target: Deep | odelot fork, DDRAM bridge, rcheevos |
-| 19 | `13_extensions/cheats.md` | 📋 | Target: Adequate | Cheat engine, .cht format |
-| 20 | `13_extensions/mra_format.md` | 📋 | Target: Deep | MRA XML schema |
-| 21 | `12_networking_remote/wifi_setup.md` | 📋 | Target: Adequate | WiFi, SSH, FTP, Samba |
-| 22 | `14_community_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
-| 23 | `09_configuration/mister_ini_guide.md` | 📋 | Target: Adequate | User-facing INI guide |
-| 24 | `07_input_devices/snac_llapi.md` | 📋 | Target: Deep | Direct controller wiring to FPGA |
-| 25 | `06_video_audio/analog_video.md` | 📋 | Target: Adequate | VGA, composite, S-Video, CRT |
+| 13| `06_fpga_subsystem/sys_top.md` | 📋 | Target: Deep | Top-level hardware abstraction |
+| 14| `06_fpga_subsystem/hps_io_module.md` | 📋 | Target: Deep | Central framework module |
+| 15| `06_fpga_subsystem/sdram_controller.md` | 📋 | Target: Deep | sdram.sv deep dive |
+| 16| `06_fpga_subsystem/ddr3_architecture.md` | 📋 | Target: Deep | F2H AXI, DDR3 allocation |
+| 17| `07_fpga_cores_architecture/template_walkthrough.md` | 📋 | Target: Deep | Core developer entry point |
+| 18| `07_fpga_cores_architecture/build/overview.md` | 📋 | Target: Deep | Quartus, QPF → RBF pipeline, CI automation |
+| 19| `08_fpga_cores_catalog/arcade_and_mra.md` | 📋 | Target: Deep | MRA XML, ROM merging, DIP switches |
+| 20| `08_fpga_cores_catalog/minimig.md` | 📋 | Target: Deep | Cross-link to Amiga Bootcamp |
+| 21| `08_fpga_cores_catalog/ao486.md` | 📋 | Target: Deep | 486SX, IDE DMA, VGA, Sound Blaster |
+| 22| `08_fpga_cores_catalog/nes.md` | 📋 | Target: Adequate | Mappers, PPU/APU, iNES/NES 2.0 |
+| 23| `08_fpga_cores_catalog/snes.md` | 📋 | Target: Adequate | Coprocessors, 5A22/S-PPU/S-SMP |
+| 24| `08_fpga_cores_catalog/genesis.md` | 📋 | Target: Adequate | 68000+Z80, VDP, YM2612, Mega CD, 32X |
+| 25| `08_fpga_cores_catalog/psx.md` | 📋 | Target: Adequate | R3000A, GTE, GPU, MDEC, CD-ROM |
+| 26| `08_fpga_cores_catalog/n64.md` | 📋 | Target: Adequate | VR4300, RDP/RSP, 8MB RDRAM |
 
-## Tier 4 — Advanced Topics
-
-| # | Article | Status | Quality | Notes |
-|---|---|---|---|---|
-| 26 | `16_advanced_topics/custom_linux.md` | 📋 | Target: Deep | Buildroot, kernel, U-Boot |
-| 27 | `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | Xilinx/Zynq port |
-| 28 | `16_advanced_topics/analogue_comparison.md` | 📋 | Target: Adequate | openFPGA vs MiSTer |
-| 29 | `02_framework/sdram_controller.md` | 📋 | Target: Deep | sdram.sv deep dive |
-| 30 | `02_framework/ddr3_architecture.md` | 📋 | Target: Deep | F2H AXI, DDR3 allocation |
-
-## Tier 5 — Build System Documentation
-
-### FPGA Build (Quartus → RBF)
+## Phase 4 — Peripherals & I/O (The Interfaces)
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 31 | `03_core_architecture/build/overview.md` | 📋 | Target: Deep | QPF → RBF pipeline |
-| 32 | `03_core_architecture/build/native_linux.md` | 📋 | Target: Adequate | Quartus 17.1 on Ubuntu |
-| 33 | `03_core_architecture/build/native_windows.md` | 📋 | Target: Adequate | Quartus 17.1 on Windows |
-| 34 | `03_core_architecture/build/docker_x86.md` | 📋 | Target: Adequate | raetro/quartus container |
-| 35 | `03_core_architecture/build/docker_apple_silicon.md` | 📋 | Target: Deep | quartus-on-docker project |
-| 36 | `03_core_architecture/build/ci_automation.md` | 📋 | Target: Adequate | GitHub Actions |
+| 27| `09_video_audio/hdmi_scaler.md` | 📋 | Target: Deep | ascal.vhd polyphase scaler |
+| 28| `09_video_audio/audio_pipeline.md` | 📋 | Target: Deep | DAC, I2S, HDMI audio, filters |
+| 29| `09_video_audio/analog_video.md` | 📋 | Target: Adequate | VGA, composite, S-Video, CRT |
+| 30| `10_input_devices/snac_llapi.md` | 📋 | Target: Deep | Direct controller wiring to FPGA |
+| 31| `11_storage/file_transfer.md` | 🔀 | Target: Adequate | VHD mounting, SD card |
+| 32| `12_networking/wifi_setup.md` | 📋 | Target: Adequate | WiFi, SSH, FTP, Samba |
 
-### HPS Build (ARM Cross-Compile)
+## Phase 5 — Features, Ecosystem & Reference
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 37 | `04_hps_binary/build/overview.md` | 📋 | Target: Deep | ARM toolchain, Makefile |
-| 38 | `04_hps_binary/build/native_linux.md` | 📋 | Target: Adequate | arm-linux-gnueabihf-g++ |
-| 39 | `04_hps_binary/build/docker_cross.md` | 📋 | Target: Adequate | Docker cross-compile |
-| 40 | `04_hps_binary/build/windows_wsl2.md` | 📋 | Target: Adequate | WSL2 workflow |
-| 41 | `04_hps_binary/build/macos.md` | 📋 | Target: Adequate | macOS + Apple Silicon |
+| 33| `13_save_states/save_state_architecture.md` | 📋 | Target: Deep | DDR3 snapshot/restore, rewind |
+| 34| `14_extensions/retroachievements.md` | 📋 | Target: Deep | odelot fork, DDRAM bridge, rcheevos |
+| 35| `14_extensions/cheats.md` | 📋 | Target: Adequate | Cheat engine, .cht format |
+| 36| `14_extensions/mra_format.md` | 📋 | Target: Deep | MRA XML schema |
+| 37| `15_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
+| 38| `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | Xilinx/Zynq port |
+| 39| `16_advanced_topics/analogue_comparison.md` | 📋 | Target: Adequate | openFPGA vs MiSTer |
+| 40| `17_references/uio_command_reference.md` | 🔀 | Target: Adequate | Command reference |
 
 ---
 
@@ -109,22 +92,22 @@ Files from `/Volumes/TB4-4Tb/Projects/mister/doc/existing/` to be migrated:
 
 | Source | Target | Status | Notes |
 |---|---|---|---|
-| `overview.md` | `00_overview/platform_architecture.md` (seed) | 📋 | Expand with diagrams |
-| `hps-bus.md` | `02_framework/hps_bus.md` | 📋 | Add breadcrumb, FPGA KB links |
-| `spi-protocol.md` | `02_framework/spi_protocol.md` | 📋 | Add breadcrumb |
-| `core-configuration.md` | `09_configuration/conf_str.md` + `mister_ini.md` | 📋 | Split into 2 articles |
-| `command-reference.md` | `15_references/uio_command_reference.md` | 📋 | Add breadcrumb |
-| `memory-map.md` | `01_hardware_platform/memory_map.md` | 📋 | Add breadcrumb, FPGA KB links |
-| `fpga-loading.md` | `02_framework/fpga_loading.md` | 📋 | Add breadcrumb |
-| `keyboard.md` | `07_input_devices/keyboard.md` | 📋 | Add breadcrumb |
-| `mouse.md` | `07_input_devices/mouse.md` | 📋 | Add breadcrumb |
-| `joystick.md` | `07_input_devices/joystick.md` | 📋 | Add breadcrumb |
-| `fdd.md` | `08_storage/floppy_emulation.md` | 📋 | Add breadcrumb |
-| `hdd-ide.md` | `08_storage/hdd_ide_emulation.md` | 📋 | Add breadcrumb |
-| `file-transfer.md` | `08_storage/file_transfer.md` | 📋 | Add breadcrumb |
-| `osd.md` | `09_configuration/osd.md` | 📋 | Add breadcrumb, expand |
-| Linux/Buildroot docs | `10_linux_system/buildroot_custom_image.md` | 📋 | Merge 2 files |
-| U-Boot patches | `10_linux_system/uboot_patches/` | 📋 | Copy as-is |
+| `overview.md` | `00_overview/platform_architecture.md` | ✅ | Replaced by new platform architecture |
+| `hps-bus.md` | `06_fpga_subsystem/hps_bus.md` | 🔀 | Copied and breadcrumb added |
+| `spi-protocol.md` | `06_fpga_subsystem/spi_protocol.md` | 🔀 | Copied and breadcrumb added |
+| `core-configuration.md` | `05_configuration/core_configuration_legacy.md` | 🔀 | Copied, needs split to conf_str.md + mister_ini.md |
+| `command-reference.md` | `17_references/uio_command_reference.md` | 🔀 | Copied and breadcrumb added |
+| `memory-map.md` | `02_hardware_platforms/memory_map.md` | 🔀 | Copied and breadcrumb added |
+| `fpga-loading.md` | `06_fpga_subsystem/fpga_loading.md` | 🔀 | Copied and breadcrumb added |
+| `keyboard.md` | `10_input_devices/keyboard.md` | 🔀 | Copied and breadcrumb added |
+| `mouse.md` | `10_input_devices/mouse.md` | 🔀 | Copied and breadcrumb added |
+| `joystick.md` | `10_input_devices/joystick.md` | 🔀 | Copied and breadcrumb added |
+| `fdd.md` | `11_storage/floppy_emulation.md` | 🔀 | Copied and breadcrumb added |
+| `hdd-ide.md` | `11_storage/hdd_ide_emulation.md` | 🔀 | Copied and breadcrumb added |
+| `file-transfer.md` | `11_storage/file_transfer.md` | 🔀 | Copied and breadcrumb added |
+| `osd.md` | `05_configuration/osd.md` | 🔀 | Copied and breadcrumb added |
+| Linux/Buildroot docs | `03_hps_linux/` | 🔀 | Copied |
+| U-Boot patches | `03_hps_linux/uboot_patches/` | 🔀 | Copied |
 
 ---
 
@@ -134,12 +117,12 @@ Files from `/Volumes/TB4-4Tb/Projects/mister/doc/existing/` to be migrated:
                     IMPACT
               Low         High
          ┌───────────┬───────────┐
-   Low   │ Tier 2    │ Tier 3    │
-EFFORT   │ Per-core  │ Extensions│
+   Low   │ Phase 4   │ Phase 5   │
+EFFORT   │ Peripherals│ Extensions│
          ├───────────┼───────────┤
-   High  │ Tier 4    │ Tier 0+1  │
-         │ Advanced  │ Foundation│
+   High  │ Phase 3   │ Phase 1+2 │
+         │ FPGA Core │ Foundation│
          └───────────┴───────────┘
 
-Build order: Tier 0 → Migration → Tier 1 → Tier 5 → Tier 3 → Tier 2 → Tier 4
+Build order: Phase 1 → Migration → Phase 2 → Phase 3 → Phase 4 → Phase 5
 ```

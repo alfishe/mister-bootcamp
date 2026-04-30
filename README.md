@@ -81,31 +81,31 @@ This knowledge base is part of a documentation suite:
 ### 01 — Hardware Platform
 | File | Topic |
 |---|---|
-| [de10_nano.md](01_hardware_platform/de10_nano.md) | DE10-Nano board reference: Cyclone V 5CSEBA6, DDR3, ADC, HDMI TX, USB, Arduino header |
-| [addon_boards.md](01_hardware_platform/addon_boards.md) | SDRAM board (active/passive), IO board (VGA, serial), USB Hub, Direct Video adapter, MT32-Pi |
-| [memory_map.md](01_hardware_platform/memory_map.md) | Cyclone V SoC physical address map as used by MiSTer |
+| [de10_nano.md](02_hardware_platforms/de10_nano.md) | DE10-Nano board reference: Cyclone V 5CSEBA6, DDR3, ADC, HDMI TX, USB, Arduino header |
+| [addon_boards.md](02_hardware_platforms/addon_boards.md) | SDRAM board (active/passive), IO board (VGA, serial), USB Hub, Direct Video adapter, MT32-Pi |
+| [memory_map.md](02_hardware_platforms/memory_map.md) | Cyclone V SoC physical address map as used by MiSTer |
 
 ### 02 — Framework (`sys/`)
 | File | Topic |
 |---|---|
-| [sys_top.md](02_framework/sys_top.md) | Top-level hardware abstraction: PLL tree, bridge wiring, GPO/GPI, HDMI/VGA muxing |
-| [hps_io_module.md](02_framework/hps_io_module.md) | `hps_io.sv` deep dive: port map, parameters, opcode dispatch, status register |
-| [hps_bus.md](02_framework/hps_bus.md) | HPS_BUS[48:0] — the 49-bit parallel bus between `sys_top.v` and `hps_io.sv` |
-| [spi_protocol.md](02_framework/spi_protocol.md) | SPI-over-GPO: software-emulated SPI via FPGA Manager registers |
-| [fpga_loading.md](02_framework/fpga_loading.md) | RBF bitstream loading: FPGA Manager state machine, bridge teardown/restore, warm reboot |
-| [sdram_controller.md](02_framework/sdram_controller.md) | `sdram.sv`: bank interleaving, refresh, dual-port, active/passive board detection |
-| [ddr3_architecture.md](02_framework/ddr3_architecture.md) | F2H AXI bridge, DDR3 port allocation (scaler, save states, RA mirror), bandwidth budget |
+| [sys_top.md](06_fpga_subsystem/sys_top.md) | Top-level hardware abstraction: PLL tree, bridge wiring, GPO/GPI, HDMI/VGA muxing |
+| [hps_io_module.md](06_fpga_subsystem/hps_io_module.md) | `hps_io.sv` deep dive: port map, parameters, opcode dispatch, status register |
+| [hps_bus.md](06_fpga_subsystem/hps_bus.md) | HPS_BUS[48:0] — the 49-bit parallel bus between `sys_top.v` and `hps_io.sv` |
+| [spi_protocol.md](06_fpga_subsystem/spi_protocol.md) | SPI-over-GPO: software-emulated SPI via FPGA Manager registers |
+| [fpga_loading.md](06_fpga_subsystem/fpga_loading.md) | RBF bitstream loading: FPGA Manager state machine, bridge teardown/restore, warm reboot |
+| [sdram_controller.md](06_fpga_subsystem/sdram_controller.md) | `sdram.sv`: bank interleaving, refresh, dual-port, active/passive board detection |
+| [ddr3_architecture.md](06_fpga_subsystem/ddr3_architecture.md) | F2H AXI bridge, DDR3 port allocation (scaler, save states, RA mirror), bandwidth budget |
 
 ### 03 — Core Architecture
 | File | Topic |
 |---|---|
-| [template_walkthrough.md](03_core_architecture/template_walkthrough.md) | Step-by-step guide to building a core from `Template_MiSTer` |
-| [build/overview.md](03_core_architecture/build/overview.md) | FPGA build pipeline: QPF → Synthesis → Fitter → Assembler → RBF |
-| [build/native_linux.md](03_core_architecture/build/native_linux.md) | Quartus 17.1 Lite on Ubuntu/Debian |
-| [build/native_windows.md](03_core_architecture/build/native_windows.md) | Quartus 17.1 on Windows (GUI + CLI) |
-| [build/docker_x86.md](03_core_architecture/build/docker_x86.md) | Docker build with `raetro/quartus:17.1` |
-| [build/docker_apple_silicon.md](03_core_architecture/build/docker_apple_silicon.md) | Quartus on Apple Silicon via Rosetta 2 (quartus-on-docker project) |
-| [build/ci_automation.md](03_core_architecture/build/ci_automation.md) | GitHub Actions CI for core compilation |
+| [template_walkthrough.md](07_fpga_cores_architecture/template_walkthrough.md) | Step-by-step guide to building a core from `Template_MiSTer` |
+| [build/overview.md](07_fpga_cores_architecture/build/overview.md) | FPGA build pipeline: QPF → Synthesis → Fitter → Assembler → RBF |
+| [build/native_linux.md](07_fpga_cores_architecture/build/native_linux.md) | Quartus 17.1 Lite on Ubuntu/Debian |
+| [build/native_windows.md](07_fpga_cores_architecture/build/native_windows.md) | Quartus 17.1 on Windows (GUI + CLI) |
+| [build/docker_x86.md](07_fpga_cores_architecture/build/docker_x86.md) | Docker build with `raetro/quartus:17.1` |
+| [build/docker_apple_silicon.md](07_fpga_cores_architecture/build/docker_apple_silicon.md) | Quartus on Apple Silicon via Rosetta 2 (quartus-on-docker project) |
+| [build/ci_automation.md](07_fpga_cores_architecture/build/ci_automation.md) | GitHub Actions CI for core compilation |
 
 ### 04 — HPS Binary (`Main_MiSTer`)
 | File | Topic |
@@ -120,44 +120,44 @@ This knowledge base is part of a documentation suite:
 ### 05 — Core Catalog
 | File | Topic |
 |---|---|
-| [minimig.md](05_core_catalog/minimig.md) | Amiga OCS/ECS/AGA — chipset mapping, hps_ext.v, SDRAM vs DDR3. → [Amiga Bootcamp](https://github.com/alfishe/amiga-bootcamp) |
-| [ao486.md](05_core_catalog/ao486.md) | 486SX soft CPU, IDE/CD-ROM DMA, VGA, Sound Blaster |
-| [nes.md](05_core_catalog/nes.md) | NES: mappers, PPU/APU, iNES/NES 2.0 |
-| [snes.md](05_core_catalog/snes.md) | SNES: GSU/SA-1/SDD-1/DSP coprocessors |
-| [genesis.md](05_core_catalog/genesis.md) | Genesis: 68000+Z80, VDP, YM2612, Mega CD, 32X |
-| [psx.md](05_core_catalog/psx.md) | PSX: R3000A, GTE, GPU, MDEC, CD-ROM, CHD |
-| [n64.md](05_core_catalog/n64.md) | N64: VR4300, RDP/RSP, 8MB RDRAM |
-| [arcade_and_mra.md](05_core_catalog/arcade_and_mra.md) | Arcade cores: MRA XML, ROM merging, DIP switches, MAME compatibility |
+| [minimig.md](08_fpga_cores_catalog/minimig.md) | Amiga OCS/ECS/AGA — chipset mapping, hps_ext.v, SDRAM vs DDR3. → [Amiga Bootcamp](https://github.com/alfishe/amiga-bootcamp) |
+| [ao486.md](08_fpga_cores_catalog/ao486.md) | 486SX soft CPU, IDE/CD-ROM DMA, VGA, Sound Blaster |
+| [nes.md](08_fpga_cores_catalog/nes.md) | NES: mappers, PPU/APU, iNES/NES 2.0 |
+| [snes.md](08_fpga_cores_catalog/snes.md) | SNES: GSU/SA-1/SDD-1/DSP coprocessors |
+| [genesis.md](08_fpga_cores_catalog/genesis.md) | Genesis: 68000+Z80, VDP, YM2612, Mega CD, 32X |
+| [psx.md](08_fpga_cores_catalog/psx.md) | PSX: R3000A, GTE, GPU, MDEC, CD-ROM, CHD |
+| [n64.md](08_fpga_cores_catalog/n64.md) | N64: VR4300, RDP/RSP, 8MB RDRAM |
+| [arcade_and_mra.md](08_fpga_cores_catalog/arcade_and_mra.md) | Arcade cores: MRA XML, ROM merging, DIP switches, MAME compatibility |
 
 ### 06 — Video & Audio
 | File | Topic |
 |---|---|
-| [hdmi_scaler.md](06_video_audio/hdmi_scaler.md) | `ascal.vhd`: polyphase scaler, DDR3 framebuffer, filter loading |
-| [audio_pipeline.md](06_video_audio/audio_pipeline.md) | Sigma-delta DAC, I2S, HDMI audio, filters, 96 kHz mode |
-| [analog_video.md](06_video_audio/analog_video.md) | IO board analog output, direct video, CRT considerations |
+| [hdmi_scaler.md](09_video_audio/hdmi_scaler.md) | `ascal.vhd`: polyphase scaler, DDR3 framebuffer, filter loading |
+| [audio_pipeline.md](09_video_audio/audio_pipeline.md) | Sigma-delta DAC, I2S, HDMI audio, filters, 96 kHz mode |
+| [analog_video.md](09_video_audio/analog_video.md) | IO board analog output, direct video, CRT considerations |
 
 ### 07 — Input Devices
 | File | Topic |
 |---|---|
-| [keyboard.md](07_input_devices/keyboard.md) | PS/2 keyboard emulation via USB HID |
-| [mouse.md](07_input_devices/mouse.md) | PS/2 mouse emulation |
-| [joystick.md](07_input_devices/joystick.md) | Joystick/gamepad handling, analog sticks, autofire |
-| [snac_llapi.md](07_input_devices/snac_llapi.md) | SNAC & LLAPI: direct controller wiring to FPGA fabric |
+| [keyboard.md](10_input_devices/keyboard.md) | PS/2 keyboard emulation via USB HID |
+| [mouse.md](10_input_devices/mouse.md) | PS/2 mouse emulation |
+| [joystick.md](10_input_devices/joystick.md) | Joystick/gamepad handling, analog sticks, autofire |
+| [snac_llapi.md](10_input_devices/snac_llapi.md) | SNAC & LLAPI: direct controller wiring to FPGA fabric |
 
 ### 08 — Storage
 | File | Topic |
 |---|---|
-| [floppy_emulation.md](08_storage/floppy_emulation.md) | Floppy disk emulation: ADF/DSK images, sector I/O protocol |
-| [hdd_ide_emulation.md](08_storage/hdd_ide_emulation.md) | HDD/IDE emulation: VHD images, DMA path |
-| [file_transfer.md](08_storage/file_transfer.md) | File I/O protocol: ROM loading, save file upload/download |
+| [floppy_emulation.md](11_storage/floppy_emulation.md) | Floppy disk emulation: ADF/DSK images, sector I/O protocol |
+| [hdd_ide_emulation.md](11_storage/hdd_ide_emulation.md) | HDD/IDE emulation: VHD images, DMA path |
+| [file_transfer.md](11_storage/file_transfer.md) | File I/O protocol: ROM loading, save file upload/download |
 
 ### 09 — Configuration
 | File | Topic |
 |---|---|
-| [conf_str.md](09_configuration/conf_str.md) | CONF_STR: RTL-embedded OSD menu declaration, status[127:0] register, parse_config() |
-| [mister_ini.md](09_configuration/mister_ini.md) | MiSTer.ini: system INI file, section matching, variable reference |
-| [mister_ini_guide.md](09_configuration/mister_ini_guide.md) | User-facing MiSTer.ini guide: video modes, filters, per-core overrides, recipes |
-| [osd.md](09_configuration/osd.md) | OSD rendering pipeline and menu navigation |
+| [conf_str.md](05_configuration/conf_str.md) | CONF_STR: RTL-embedded OSD menu declaration, status[127:0] register, parse_config() |
+| [mister_ini.md](05_configuration/mister_ini.md) | MiSTer.ini: system INI file, section matching, variable reference |
+| [mister_ini_guide.md](05_configuration/mister_ini_guide.md) | User-facing MiSTer.ini guide: video modes, filters, per-core overrides, recipes |
+| [osd.md](05_configuration/osd.md) | OSD rendering pipeline and menu navigation |
 
 ### 10 — Linux System
 | Folder / File | Topic |
@@ -173,29 +173,29 @@ This knowledge base is part of a documentation suite:
 ### 11 — Save States
 | File | Topic |
 |---|---|
-| [save_state_architecture.md](11_save_states/save_state_architecture.md) | DDR3 snapshot/restore, SSPI protocol, per-core requirements, rewind |
+| [save_state_architecture.md](13_save_states/save_state_architecture.md) | DDR3 snapshot/restore, SSPI protocol, per-core requirements, rewind |
 
 ### 12 — Networking & Remote
 | File | Topic |
 |---|---|
-| [wifi_setup.md](12_networking_remote/wifi_setup.md) | USB WiFi, wpa_supplicant, SSH, FTP, Samba, web console |
+| [wifi_setup.md](12_networking/wifi_setup.md) | USB WiFi, wpa_supplicant, SSH, FTP, Samba, web console |
 
 ### 13 — Extensions
 | File | Topic |
 |---|---|
-| [retroachievements.md](13_extensions/retroachievements.md) | RetroAchievements: odelot fork, DDRAM bridge, rcheevos engine, per-console hashing |
-| [cheats.md](13_extensions/cheats.md) | Cheat engine, .cht format, GameShark/Action Replay conversion |
-| [mra_format.md](13_extensions/mra_format.md) | MRA XML schema, ROM merging, MAME set management |
+| [retroachievements.md](14_extensions/retroachievements.md) | RetroAchievements: odelot fork, DDRAM bridge, rcheevos engine, per-console hashing |
+| [cheats.md](14_extensions/cheats.md) | Cheat engine, .cht format, GameShark/Action Replay conversion |
+| [mra_format.md](14_extensions/mra_format.md) | MRA XML schema, ROM merging, MAME set management |
 
 ### 14 — Community Ecosystem
 | File | Topic |
 |---|---|
-| [update_scripts.md](14_community_ecosystem/update_scripts.md) | `update_all`, `downloader`, custom database URLs |
+| [update_scripts.md](15_ecosystem/update_scripts.md) | `update_all`, `downloader`, custom database URLs |
 
 ### 15 — References
 | File | Topic |
 |---|---|
-| [uio_command_reference.md](15_references/uio_command_reference.md) | Complete UIO/FIO opcode table with bit-level detail |
+| [uio_command_reference.md](17_references/uio_command_reference.md) | Complete UIO/FIO opcode table with bit-level detail |
 
 ### 16 — Advanced Topics
 | File | Topic |

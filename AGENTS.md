@@ -141,7 +141,7 @@ Use GitHub-style alerts for critical information:
 
 ### 3.8 Section README Files
 
-Every numbered directory (`00_overview/`, `01_hardware_platform/`, etc.) must contain a `README.md` with:
+Every numbered directory (`00_overview/`, `02_hardware_platforms/`, etc.) must contain a `README.md` with:
 1. Section title and one-paragraph scope description
 2. Article index table (filename, topic, quality tier)
 3. Cross-references to related sections
@@ -154,7 +154,7 @@ Every numbered directory (`00_overview/`, `01_hardware_platform/`, etc.) must co
 
 Use relative paths within this repository:
 ```markdown
-See [HPS Bus Protocol](../02_framework/hps_bus.md) for the 49-bit bus architecture.
+See [HPS Bus Protocol](../06_fpga_subsystem/hps_bus.md) for the 49-bit bus architecture.
 ```
 
 ### 4.2 FPGA Knowledge Base Cross-References
@@ -233,7 +233,7 @@ The retro community values depth and authenticity. If you can explain the polyph
 | Type | Convention | Example |
 |---|---|---|
 | Article | `snake_case.md` | `hps_bus.md`, `conf_str.md` |
-| Section directory | `NN_descriptive_name/` | `02_framework/`, `13_extensions/` |
+| Section directory | `NN_descriptive_name/` | `06_fpga_subsystem/`, `14_extensions/` |
 | Sub-directory | `snake_case/` | `build/`, `input/` |
 | Image | `snake_case.png` | `system_block_diagram.png` |
 
