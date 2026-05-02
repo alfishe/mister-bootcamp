@@ -331,7 +331,7 @@ This is the angle most people miss. MiSTer gives you cycle-accurate recreations 
 2. Test on real hardware (no x86 simulator — ARM binary on real DE10-Nano)
 3. Sorgelig reviews and merges — he's responsive but thorough
 
-> **Deep dive**: [HPS Binary Architecture](../04_hps_binary/architecture.md) · [Build Toolchain](../04_hps_binary/build/overview.md) · [Linux Stack](../03_hps_linux/kernel/) · [Custom Linux Images](../16_advanced_topics/custom_linux.md)
+> **Deep dive**: [HPS Binary Architecture](../04_hps_binary/architecture.md) · [Main_MiSTer Overview](../04_hps_binary/build/overview.md) · [Build Toolchain](../04_hps_binary/build/toolchain.md) · [Linux Stack](../03_hps_linux/kernel/) · [Custom Linux Images](../16_advanced_topics/custom_linux.md)
 
 ---
 

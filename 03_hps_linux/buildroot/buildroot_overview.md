@@ -158,7 +158,7 @@ buildroot/output/
 
 ### 4.1 The rootfs.cpio Archive
 
-`rootfs.cpio` is the **only** Buildroot artifact consumed by the downstream kernel build. It contains:
+`rootfs.cpio` is the **only** Buildroot artifact consumed by the downstream kernel build for the `mr-fusion` installer. It contains:
 
 - `/bin/busybox` (multi-call binary — shell, init, mount, etc.)
 - `/etc/inittab` and `/etc/init.d/rcS` (BusyBox init scripts)
@@ -167,13 +167,13 @@ buildroot/output/
 - `/sbin/mkfs.exfat`, `/sbin/fsck.exfat` (exfatprogs)
 - `/lib/` (uClibc-ng shared libraries)
 
-The cpio archive is embedded into the kernel `zImage` via the kernel defconfig directive:
+The cpio archive is embedded into the installer's kernel `zImage` via the kernel defconfig directive:
 
 ```ini
 CONFIG_INITRAMFS_SOURCE="../buildroot/output/images/rootfs.cpio"
 ```
 
-This creates a self-contained boot image — the entire OS loads into RAM at boot. After init, only the `/media/fat/` data partition (mounted from the SD card's third partition) is read-write.
+This creates a self-contained, one-time boot image. The entire installer OS loads into RAM. Once it formats the SD card and extracts the real MiSTer OS, this ephemeral environment is destroyed.
 
 Source: `mr-fusion/builder/config/kernel-defconfig`
 
@@ -196,16 +196,19 @@ The overlay tree mirrors the target rootfs structure exactly. Every file under t
 
 ### 5.2 The S99install-MiSTer.sh Script
 
-This is MiSTer's **first-boot installer** — a BusyBox ash script that runs once when a freshly imaged SD card boots:
+This is MiSTer's **first-boot installer** — a BusyBox ash script that runs once when a freshly flashed `mr-fusion` SD card boots:
 
-1. Mounts the FAT32 boot partition (`/dev/mmcblk0p1`)
-2. Extracts `release_*.7z` via `7z` (p7zip)
-3. Repartitions the SD card to create the full-size exFAT `MiSTer_Data` partition
-4. Overwrites the factory `bootloader.img` with the MiSTer-patched `uboot.img`
-5. Sets up the `linux/` directory structure (`/media/fat/linux/`)
-6. Self-deletes (`rm /etc/init.d/S99install-MiSTer.sh`) to prevent re-execution on subsequent boots
+1. Mounts the FAT32 boot partition (`/dev/mmcblk0p1`) where the image was flashed.
+2. Extracts `release_*.7z` via `7z` (p7zip) to RAM.
+3. Repartitions the SD card to create the full-size exFAT `MiSTer_Data` partition, effectively destroying the FAT32 boot partition it just booted from.
+4. Overwrites the factory `bootloader.img` with the MiSTer-patched `uboot.img`.
+5. Sets up the `linux/` directory structure (`/media/fat/linux/`) and copies the extracted release files to the new exFAT partition.
+6. Reboots the system into the newly installed runtime OS.
 
 Source: `mr-fusion/builder/scripts/S99install-MiSTer.sh`
+
+> [!NOTE]
+> There is no explicit "self-deletion" command in the installer script. Because the script reformats `/dev/mmcblk0p1` (which contained the `zImage` it booted from) to exFAT, the installer OS commits "seppuku." The next boot cycle reads the runtime kernel and loopback filesystem from the new exFAT partition, preventing re-execution.
 
 > [!CAUTION]
 > The S99install script overwrites the **raw 0xA2 bootloader partition** with `uboot.img` from the MiSTer release archive. If this step fails or is interrupted, the DE10-Nano will not boot on the next power cycle. Always verify that `uboot.img` is present in the release archive before assembling the SD card image.
@@ -250,28 +253,28 @@ Source: `Linux-Kernel_MiSTer` Makefile; verified on Buildroot 2024.08+ and 2026.
 
 ---
 
-## 7. Buildroot's Role in the MiSTer Build Pipeline
+## 7. Buildroot's Role in the Installer Pipeline
 
-Buildroot is the **first stage** of the three-stage MiSTer build pipeline:
+Buildroot is the **first stage** of assembling the `mr-fusion` installer image:
 
 ```mermaid
 flowchart LR
-    subgraph S1["Stage 1: Buildroot"]
+    subgraph S1["Stage 1: Buildroot (Installer Rootfs)"]
         direction TB
         DEF["mr-fusion_defconfig"] --> MAKE["make -j(nproc)"]
         MAKE --> CPIO["rootfs.cpio"]
         MAKE --> TC["Cross Toolchain"]
     end
 
-    subgraph S2["Stage 2: Kernel"]
+    subgraph S2["Stage 2: Kernel (Installer Kernel)"]
         direction TB
         TC --> KMAKE["make ARCH=arm<br/>CROSS_COMPILE=..."]
         CPIO -->|"CONFIG_INITRAMFS_SOURCE"| KMAKE
-        KMAKE --> ZI["zImage<br/>(kernel + initramfs)"]
+        KMAKE --> ZI["zImage<br/>(installer + initramfs)"]
         KMAKE --> DTB["socfpga_cyclone5_socdk.dtb"]
     end
 
-    subgraph S3["Stage 3: Packaging"]
+    subgraph S3["Stage 3: Packaging (mr-fusion.img)"]
         direction TB
         ZI --> IMG["genimage / dd"]
         DTB --> IMG
@@ -279,13 +282,31 @@ flowchart LR
     end
 ```
 
-The critical dependency: **Stage 2 (kernel build) depends on Stage 1's cross-toolchain and rootfs.cpio**. You cannot build the MiSTer kernel without first completing the Buildroot build.
+The critical dependency: **Stage 2 (kernel build) depends on Stage 1's cross-toolchain and rootfs.cpio**. You cannot build the `mr-fusion` installer kernel without first completing the Buildroot build.
 
 Source: Pipeline design verified against `mr-fusion/Dockerfile`
 
 ---
 
-## 8. Antipatterns and Hazards
+## 8. Architectural Clarity: Installer vs. Runtime
+
+It is critical to distinguish between the `mr-fusion` Buildroot environment and the actual MiSTer Runtime OS. They boot using fundamentally different mechanisms.
+
+### The Installer (`mr-fusion`)
+The Buildroot configuration documented here is **exclusively** for the `mr-fusion` installer. It boots entirely from an ephemeral `rootfs.cpio` embedded inside its `zImage`. It contains the absolute minimum tools (p7zip, exfatprogs) required to partition the SD card and unpack the runtime OS, after which it is destroyed.
+
+### The Runtime (MiSTer OS)
+The actual MiSTer Linux runtime is **not** an initramfs embedded in `zImage`.
+1. The release archive (`release_*.7z`) contains a pre-built `linux.img` file.
+2. `linux.img` is actually an **ext4 loopback filesystem** (typically built from `Linux_Image_creator_MiSTer`).
+3. U-Boot reads the runtime `zImage_dtb` from the exFAT partition and loads the `linux.img` file as the root filesystem via kernel arguments: `root=$mmcroot loop=linux/linux.img`.
+
+> [!IMPORTANT]
+> If your goal is to modify the MiSTer Linux runtime (e.g., adding WiFi firmware or custom daemons), **do not modify the `mr-fusion` Buildroot defconfig**. Changes made to `mr-fusion` will only appear during the initial 30-second installation phase and will disappear when the runtime OS boots. Modifying the runtime OS requires modifying the `linux.img` ext4 filesystem or using persistence hooks like `user-startup.sh`.
+
+---
+
+## 9. Antipatterns and Hazards
 
 ### 8.1 Do NOT Use `make menuconfig` to Configure
 
@@ -316,21 +337,21 @@ MiSTer's mr-fusion defconfig uses `BR2_TOOLCHAIN_BUILDROOT=y` (internal toolchai
 
 ---
 
-## 9. Platform Context
+## 10. Platform Context
 
 | Platform | Build System | Rootfs | Kernel Build |
 |---|---|---|---|
-| **MiSTer (DE10-Nano)** | Buildroot (internal toolchain) | cpio initramfs embedded in zImage | Cross-compiled with Buildroot GCC |
+| **MiSTer (DE10-Nano)** | mr-fusion (installer), custom (runtime) | Loopback ext4 (`linux.img`) | Cross-compiled with GCC |
 | **Analogue Pocket (openFPGA)** | Proprietary (Intel SoC EDS) | N/A — bare-metal ARM binary | N/A — no Linux on HPS |
 | **MiST / SiDi** | N/A — no HPS | N/A | N/A |
 | **MiSTeX** | Buildroot or Yocto (board-dependent) | Varies by SBC (ext4 on eMMC common) | Board BSP kernel |
 | **Software Emulation (RetroArch)** | Host OS package manager | Host OS rootfs | N/A |
 
-MiSTer's approach — Buildroot → cpio → initramfs embedded in zImage — is optimized for the single-board, power-cycle-heavy use case of a game console. The entire OS lives in RAM; only user data touches the SD card. This is fundamentally different from MiSTeX's approach (where the SBC runs a full Linux with persistent storage) and Analogue Pocket's approach (where there is no HPS Linux at all).
+MiSTer's approach — an ephemeral RAM-based installer paired with a persistent loopback `linux.img` runtime — is optimized for the single-board, power-cycle-heavy use case of a game console. Because the rootfs runs as an isolated loopback mount, catastrophic corruption to the exFAT user-data partition rarely destroys the core OS. This is fundamentally different from MiSTeX's approach (where the SBC runs a full Linux directly on persistent storage) and Analogue Pocket's approach (where there is no HPS Linux at all).
 
 ---
 
-## 10. Cross-References
+## 11. Cross-References
 
 - [Buildroot Linux for DE10-Nano — Comprehensive](../Buildroot%20Linux%20for%20DE10-Nano%20-%20Comprehensive.md) — Full step-by-step build pipeline
 - [FPGA KB — Cyclone V SoC Architecture](https://github.com/alfishe/fpga-bootcamp/blob/main/02_architecture/soc/cyclone_v_soc.md) — HPS/FPGA bridge details relevant to understanding why Buildroot is needed
@@ -342,7 +363,7 @@ MiSTer's approach — Buildroot → cpio → initramfs embedded in zImage — is
 
 ---
 
-## 11. References
+## 12. References
 
 | Source | Path / URL |
 |---|---|

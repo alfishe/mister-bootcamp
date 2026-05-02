@@ -19,6 +19,9 @@ mr-fusion/builder/config/buildroot-defconfig
 
 It is a **minimal defconfig** — only non-default options are listed. Running `make mr-fusion_defconfig` expands it into a full `.config` with all Kconfig defaults resolved. The target Buildroot version is **2024.08 or newer** (tested through 2026.02).
 
+> [!IMPORTANT]
+> Keep in mind that `mr-fusion` is **only the installer environment**. It is not the runtime MiSTer OS. Therefore, this defconfig only defines the packages needed to bootstrap the SD card, not the packages you would use while playing games.
+
 Source: [`mr-fusion`](https://github.com/MiSTer-devel/mr-fusion/blob/master/builder/config/buildroot-defconfig)
 
 ---
@@ -193,15 +196,15 @@ BR2_TARGET_ROOTFS_CPIO_GZIP=y
 
 ### 7.1 cpio Archive
 
-`BR2_TARGET_ROOTFS_CPIO=y` generates `output/images/rootfs.cpio` — a cpio archive of the entire rootfs. This is the **canonical MiSTer rootfs format** because it is embedded directly into the kernel `zImage` via `CONFIG_INITRAMFS_SOURCE`.
+`BR2_TARGET_ROOTFS_CPIO=y` generates `output/images/rootfs.cpio` — a cpio archive of the entire installer rootfs. This is the **format required by the installer** because it is embedded directly into the installer's kernel `zImage` via `CONFIG_INITRAMFS_SOURCE`.
 
 ### 7.2 gzip Compression
 
 `BR2_TARGET_ROOTFS_CPIO_GZIP=y` compresses the cpio archive with gzip. The compressed initramfs is ~8 MB — small enough to fit in DDR3 RAM alongside the FPGA core and the kernel.
 
-### 7.3 No TAR Output
+### 7.3 No TAR/EXT4 Output
 
-`# BR2_TARGET_ROOTFS_TAR is not set` explicitly disables the tar rootfs output. A tar archive would serve no purpose — MiSTer only consumes the cpio archive for initramfs embedding.
+`# BR2_TARGET_ROOTFS_TAR is not set` explicitly disables the tar rootfs output. A tar archive would serve no purpose here — the `mr-fusion` installer only consumes the cpio archive for initramfs embedding. (The runtime MiSTer OS loopback ext4 image is built separately).
 
 ---
 
@@ -216,8 +219,8 @@ Several Buildroot options are **deliberately absent** from the mr-fusion defconf
 | `BR2_INIT_SYSTEMD` | No systemd — BusyBox `init` (`BR2_INIT_BUSYBOX=y`, the default) |
 | `BR2_PACKAGE_XORG7` | No X11 — the OSD renders directly to `/dev/fb0` |
 | `BR2_PACKAGE_OPENSSL` | No OpenSSL at build time — `wget` handles HTTPS internally |
-| `BR2_PACKAGE_WPA_SUPPLICANT` | No WiFi in the installer — WiFi setup happens post-install via `wifi.sh` |
-| `BR2_TARGET_ROOTFS_EXT2` | No ext2/3/4 rootfs — MiSTer uses initramfs, not a persistent root partition |
+| `BR2_PACKAGE_WPA_SUPPLICANT` | No WiFi in the installer — WiFi setup happens post-install in the runtime OS |
+| `BR2_TARGET_ROOTFS_EXT2` | No ext2/3/4 rootfs — The installer uses an initramfs. The runtime MiSTer OS uses an ext4 loopback image (`linux.img`), which is built separately outside this defconfig. |
 
 ---
 
@@ -237,7 +240,7 @@ Several Buildroot options are **deliberately absent** from the mr-fusion defconf
 ## 10. Cross-References
 
 - [Buildroot Overview](buildroot_overview.md) — Architecture, package model, output structure, cross-toolchain
-- [Custom Packages](custom_packages.md) — Adding WiFi firmware, RetroAchievements dependencies
+- [Custom Packages](custom_packages.md) — Adding custom tools and recovery scripts to the installer
 - [Image Generation](image_generation.md) — SD card partition layout and image assembly
 - [Custom Image Guide](custom_image_guide.md) — End-to-end build pipeline
 - [FPGA KB — Cyclone V HPS](https://github.com/alfishe/fpga-bootcamp/blob/main/02_architecture/soc/hps_fpga_intel_soc.md) — HPS architecture reference

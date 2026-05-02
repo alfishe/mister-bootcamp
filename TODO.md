@@ -35,8 +35,8 @@
 |---|---|---|---|---|
 | 8 | `03_hps_linux/alternative_distros.md` | ✅ | Deep | Debian, Ubuntu, Arch Linux ARM on MiSTer; MiSTerArch, MOnSieurFPGA |
 | 8a| `03_hps_linux/custom_linux.md` | 📋 | Superseded | Covered by buildroot/, kernel/, uboot/, image_build/, alternative_distros.md |
-| 9 | `04_hps_binary/architecture.md` | 📋 | Target: Deep | Main_MiSTer module map |
-| 10| `04_hps_binary/build/overview.md` | ✅ | Deep | ARM toolchain, Makefile, cross-compile |
+| 9 | `04_hps_binary/build/overview.md` | ✅ | Deep | Main_MiSTer binary architecture, modules, startup sequence |
+| 10| `04_hps_binary/build/toolchain.md` | ✅ | Deep | ARM toolchain, Makefile, cross-compile |
 | 11| `05_configuration/mister_ini_guide.md` | 📋 | Target: Adequate | User-facing INI guide |
 | 12| `05_configuration/osd.md` | 🔀 | Target: Adequate | OSD rendering and navigation architecture |
 

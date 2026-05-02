@@ -91,7 +91,8 @@
 | File | Topic |
 |---|---|
 | [architecture.md](04_hps_binary/architecture.md) | Module map, main loop, scheduler, key data structures |
-| [build/overview.md](04_hps_binary/build/overview.md) | ARM cross-compilation toolchain and Makefile |
+| [build/overview.md](04_hps_binary/build/overview.md) | Main_MiSTer binary architecture: modules, startup sequence, FPGA communication |
+| [build/toolchain.md](04_hps_binary/build/toolchain.md) | ARM cross-compilation toolchain and Makefile |
 
 #### 05 — Configuration
 | File | Topic |

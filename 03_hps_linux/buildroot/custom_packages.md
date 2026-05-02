@@ -2,7 +2,7 @@
 
 # Custom Packages
 
-How to extend the MiSTer Buildroot rootfs with additional packages — WiFi firmware and tools, RetroAchievements runtime dependencies, and the general pattern for adding any Buildroot package to the mr-fusion defconfig.
+How to extend the `mr-fusion` installer rootfs with custom recovery tools, why you **should not** use `mr-fusion` for runtime dependencies like WiFi or RetroAchievements, and the general pattern for adding any Buildroot package to the installer.
 
 > [!NOTE]
 > This article assumes you've read the [Buildroot Overview](buildroot_overview.md) and [MiSTer Defconfig Walkthrough](mister_defconfig.md). You should understand the defconfig model and the rootfs overlay mechanism before adding custom packages.
@@ -42,123 +42,27 @@ Source: [Buildroot Manual — Adding Packages](https://buildroot.org/downloads/m
 
 ---
 
-## 2. WiFi Support
+## 2. The Runtime Modification Fallacy
 
-The stock mr-fusion defconfig does **not** include WiFi — the installer runs over Ethernet or uses pre-downloaded files. To add WiFi support to a custom image, you need three additions to the defconfig:
+It is a common architectural misconception that you should add runtime packages (like `wpa_supplicant` for WiFi, or `libcurl` for RetroAchievements) to the `mr-fusion` Buildroot configuration.
 
-### 2.1 WiFi Kernel Modules
+As detailed in the [Buildroot Overview](buildroot_overview.md), `mr-fusion` is **only the ephemeral installer**. Any packages or firmware you add to the `mr-fusion` defconfig will only be available during the initial ~30-second SD card partitioning phase. Once the system reboots into the actual MiSTer OS (the `linux.img` loopback ext4 filesystem), all of those `mr-fusion` packages will vanish.
 
-The MiSTer Linux kernel's `mr-fusion_defconfig` must include the relevant WiFi driver. For common USB WiFi adapters used with MiSTer (Ralink/MediaTek RT2870, Realtek RTL8192CU):
+If your goal is to add permanent packages (like custom WiFi firmware, VPN daemons, or RetroAchievements dependencies) to the runtime MiSTer OS, **do not use the `mr-fusion` Buildroot**. Instead, use one of the following methods:
 
-```bash
-# Add to kernel defconfig
-echo 'CONFIG_RT2800USB=y' >> arch/arm/configs/mr-fusion_defconfig
-echo 'CONFIG_RT2X00_LIB_USB=y' >> arch/arm/configs/mr-fusion_defconfig
-echo 'CONFIG_RT2X00_LIB_FIRMWARE=y' >> arch/arm/configs/mr-fusion_defconfig
-```
+1. **Pacman / Entware**: Use the built-in package managers on a running MiSTer system.
+2. **Persistence Hooks**: Add download or setup commands to `/media/fat/linux/user-startup.sh`, which executes on every boot in the runtime OS.
+3. **Direct loopback modification**: Mount the `linux.img` file on a host PC (or in a chroot), install the packages, unmount, and re-pack your custom release archive.
 
-Source: `mr-fusion/builder/config/kernel-defconfig`
-
-### 2.2 wpa_supplicant
-
-Add to the Buildroot defconfig:
-
-```ini
-BR2_PACKAGE_WPA_SUPPLICANT=y
-BR2_PACKAGE_WPA_SUPPLICANT_WPA3=y           # WPA3 support (optional)
-BR2_PACKAGE_WPA_SUPPLICANT_AP_SUPPORT=y     # Access point mode (optional)
-```
-
-`wpa_supplicant` provides the `wpa_cli` and `wpa_supplicant` binaries. The MiSTer `wifi.sh` script uses `wpa_cli` to scan for networks and configure connections interactively.
-
-> [!WARNING]
-> `wpa_supplicant` pulls in `libnl` and `openssl` as dependencies. This adds ~3 MB to the rootfs size. If your custom image is near the DDR3 allocation limit, test with `free -m` after boot.
-
-### 2.3 WiFi Firmware Blobs
-
-WiFi adapters require binary firmware blobs loaded by the kernel at device probe time. These are not compiled — they're copied to `/lib/firmware/` via a rootfs overlay:
-
-```bash
-# Create firmware overlay directory
-mkdir -p buildroot/board/mr-fusion/rootfs-overlay/lib/firmware/
-
-# Copy firmware blobs (example: Ralink RT2870)
-cp /lib/firmware/rt2870.bin buildroot/board/mr-fusion/rootfs-overlay/lib/firmware/
-```
-
-For multiple adapters, bundle a comprehensive firmware set. The official MiSTer `wifi.sh` script supports Ralink, Realtek, and Atheros chipsets — each needs its own firmware blob.
-
-Source: `MiSTer-devel/Scripts_MiSTer/blob/master/other_authors/wifi.sh`
+Modifying the `mr-fusion` Buildroot is strictly for adding tools to the **installation phase** (e.g., custom network recovery tools, specific filesystem formatters, or automated pre-install hooks).
 
 ---
 
-## 3. RetroAchievements Dependencies
+## 3. General Pattern: Adding a Package to the Installer
 
-The [RetroAchievements](https://retroachievements.org) integration is provided by the `odelot/Main_MiSTer` fork, which replaces the standard `MiSTer` binary. The fork requires these runtime dependencies:
+If you do need to add a package to the `mr-fusion` installer, all Buildroot packages follow the same integration pattern. Here's the step-by-step workflow:
 
-### 3.1 Networking
-
-RetroAchievements communicates with the RA server over HTTPS. The `Main_MiSTer` binary links these statically, so no Buildroot packages are needed for the core RA functionality, **but** the kernel must have network support:
-
-```bash
-# Kernel defconfig additions (already present in mr-fusion defconfig)
-CONFIG_NET=y
-CONFIG_INET=y
-CONFIG_TCP_CONG_CUBIC=y
-CONFIG_DNS_RESOLVER=y
-```
-
-These are already enabled in the mr-fusion kernel defconfig. No changes needed.
-
-### 3.2 curl (for Downloader/Update Scripts)
-
-Some RetroAchievements-related tooling uses `curl` for HTTPS downloads. Add to the Buildroot defconfig:
-
-```ini
-BR2_PACKAGE_LIBCURL=y
-BR2_PACKAGE_CURL=y               # curl command-line tool
-BR2_PACKAGE_LIBCURL_CURL=y       # enable the curl binary
-```
-
-### 3.3 CA Certificates
-
-HTTPS connections require root CA certificates for TLS verification:
-
-```ini
-BR2_PACKAGE_CA_CERTIFICATES=y
-```
-
-This installs the Mozilla CA certificate bundle to `/etc/ssl/certs/ca-certificates.crt`.
-
-> [!NOTE]
-> The `odelot/Main_MiSTer` binary statically links its HTTP client and does not use system CA certificates. The CA certificates package is only needed if you're running shell scripts or additional tools that use OpenSSL/libcurl for HTTPS.
-
-### 3.4 RetroAchievements Build Dependency Summary
-
-```mermaid
-flowchart LR
-    subgraph Buildroot
-        CA["ca-certificates"] --> ROOT["rootfs.cpio"]
-        CURL["libcurl + curl"] --> ROOT
-    end
-    subgraph Kernel
-        NET["CONFIG_NET / INET / DNS"] --> ZI["zImage"]
-    end
-    subgraph Runtime
-        ROOT --> RA["RetroAchievements<br/>odelot/Main_MiSTer fork"]
-        ZI --> RA
-    end
-```
-
-Source: `odelot/Main_MiSTer` — build configuration and README
-
----
-
-## 4. General Pattern: Adding Any Buildroot Package
-
-All Buildroot packages follow the same integration pattern. Here's the step-by-step workflow:
-
-### 4.1 Find the Package
+### 3.1 Find the Package
 
 List available packages:
 
@@ -169,7 +73,7 @@ make list-defconfigs | grep <package-name>
 
 Or browse `package/<name>/Config.in` to find the option symbol.
 
-### 4.2 Add to Defconfig
+### 3.2 Add to Defconfig
 
 Append the option to your defconfig:
 
@@ -177,7 +81,7 @@ Append the option to your defconfig:
 echo 'BR2_PACKAGE_<NAME>=y' >> configs/mr-fusion_defconfig
 ```
 
-### 4.3 Resolve Dependencies
+### 3.3 Resolve Dependencies
 
 `make menuconfig` shows dependency resolution. Run it interactively to verify:
 
@@ -189,7 +93,7 @@ make menuconfig
 
 Navigate to the package category and check that all dependencies are satisfied. Buildroot's Kconfig will gray out or hide packages with unmet dependencies.
 
-### 4.4 Update the Defconfig
+### 3.4 Update the Defconfig
 
 After verifying in `menuconfig`, extract only your changes:
 
@@ -199,7 +103,7 @@ make savedefconfig DEFCONFIG=configs/mr-fusion_defconfig
 
 This rewrites the defconfig with only the non-default options — keeping it minimal.
 
-### 4.5 Rebuild
+### 3.5 Rebuild
 
 ```bash
 make -j$(nproc)
@@ -209,9 +113,9 @@ The rootfs will now include the new package(s).
 
 ---
 
-## 5. Package-Specific Notes
+## 4. Installer Package Examples
 
-### 5.1 SSH Server (Dropbear)
+### 4.1 SSH Server (Dropbear)
 
 For remote shell access without relying on the post-install SSH setup:
 
@@ -221,7 +125,7 @@ BR2_PACKAGE_DROPBEAR=y
 
 Dropbear is a lightweight SSH server (~200 KB) ideal for embedded systems. After boot, `dropbear` listens on port 22 with root password `1` (MiSTer default).
 
-### 5.2 NTP Client
+### 4.2 NTP Client
 
 For accurate timestamps (useful for RetroAchievements which validate server timestamps):
 
@@ -232,7 +136,7 @@ BR2_PACKAGE_NTP_NTPDATE=y
 
 Alternative: `BR2_PACKAGE_CHRONY=y` (lighter weight, better for intermittent connections).
 
-### 5.3 Game Controller Database
+### 4.3 Game Controller Database
 
 The SDL game controller database (`gamecontrollerdb.txt`) is not a Buildroot package — it's a data file bundled during image assembly:
 
@@ -245,7 +149,7 @@ Source: `mr-fusion/Dockerfile`
 
 ---
 
-## 6. Rootfs Size Budget
+## 5. Rootfs Size Budget
 
 Every added package increases the compressed initramfs size. MiSTer's initramfs is loaded into DDR3 RAM alongside:
 
@@ -270,9 +174,9 @@ The DE10-Nano has 1 GB of DDR3. In practice, the initramfs has generous headroom
 
 ---
 
-## 7. Testing Custom Packages
+## 6. Testing Custom Packages
 
-### 7.1 Verify Package Inclusion
+### 6.1 Verify Package Inclusion
 
 After the Buildroot build, check that the package made it into the target tree:
 
@@ -282,7 +186,7 @@ ls buildroot/output/target/usr/bin/<binary-name>
 ls buildroot/output/target/lib/<library-name>.so*
 ```
 
-### 7.2 Verify Initramfs Content
+### 6.2 Verify Initramfs Content
 
 ```bash
 mkdir -p /tmp/rootfs && cd /tmp/rootfs
@@ -291,9 +195,9 @@ ls -la etc/init.d/   # Check overlay scripts
 ls -la usr/bin/       # Check package binaries
 ```
 
-### 7.3 Runtime Verification
+### 6.3 Runtime Verification
 
-After booting the custom image on the DE10-Nano:
+After booting the custom installer image on the DE10-Nano:
 
 ```bash
 # Check package binaries
@@ -313,7 +217,7 @@ free -m
 
 ---
 
-## 8. Cross-References
+## 7. Cross-References
 
 - [Buildroot Overview](buildroot_overview.md) — Package model and output structure
 - [MiSTer Defconfig Walkthrough](mister_defconfig.md) — Line-by-line defconfig reference
@@ -323,7 +227,7 @@ free -m
 
 ---
 
-## 9. References
+## 8. References
 
 | Source | Path / URL |
 |---|---|

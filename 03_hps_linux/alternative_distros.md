@@ -310,7 +310,8 @@ Source: MiSTer FPGA Forum — [MiSTerArch thread](https://misterfpga.org/viewtop
 
 - [Buildroot Overview](buildroot/buildroot_overview.md) — Stock rootfs architecture
 - [Package Management](buildroot/package_management.md) — Entware, chroot, and cross-compilation alternatives
-- [HPS Binary — ARM Cross-Compilation]( ../../04_hps_binary/build/overview.md) — Building `Main_MiSTer` and utilities
+- [HPS Binary — ARM Cross-Compilation]( ../../04_hps_binary/build/toolchain.md) — Building `Main_MiSTer` and utilities
+- [HPS Binary — Main_MiSTer Overview]( ../../04_hps_binary/build/overview.md) — Main_MiSTer binary architecture and capabilities
 - [Image Build](image_build/) — SD card partition layout and `linux.img` creation
 - [U-Boot](uboot/) — Bootloader patches and boot sequence
 - [Kernel](kernel/) — MiSTer kernel patches and build

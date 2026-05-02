@@ -5,7 +5,7 @@
 Buildroot generates a monolithic, static rootfs with no runtime package manager by design. This article covers the four practical approaches for adding software to a MiSTer system — from the community-standard Entware installation to cross-compilation — with their trade-offs, failure modes, and verified compatibility.
 
 > [!NOTE]
-> This article assumes you've read the [Buildroot Overview](buildroot_overview.md). You should understand the initramfs model, the rootfs overlay mechanism, and the difference between Buildroot's build-time package selection and runtime package management.
+> This article assumes you've read the [Buildroot Overview](buildroot_overview.md). You should understand the loopback rootfs model, the rootfs overlay mechanism, and the difference between static build-time package selection and runtime package management.
 
 ---
 
@@ -20,7 +20,7 @@ Buildroot is a **rootfs generator**, not a distribution. By default it produces 
 | **Rootfs mutability** | Persistent, read-write, upgradable | Static, burned to flash, or embedded in initramfs |
 | **Package database** | `/var/lib/dpkg/`, `/var/lib/opkg/` | None — packages are compiled into the image |
 
-However, MiSTer has a critical difference from typical embedded Buildroot targets: a large, persistent **exFAT data partition** (`/media/fat/`) that survives reboots and `linux.img` updates. This enables several approaches that are impossible on initramfs-only systems.
+However, MiSTer has a critical difference from typical embedded Buildroot targets: a large, persistent **exFAT data partition** (`/media/fat/`) that survives reboots and `linux.img` updates. This enables several runtime package approaches that are impossible on strictly static systems.
 
 Source: [Buildroot Manual — About Buildroot](https://buildroot.org/downloads/manual/manual.html#_about_buildroot)
 
@@ -67,7 +67,7 @@ chmod +x generic.sh
 
 ### 2.3 Persistence Across Reboots
 
-The `linux.img` initramfs is replaced during MiSTer updates, so modifications to `/etc/fstab` or `/etc/init.d/` are lost. Use `/media/fat/linux/user-startup.sh` instead — this script is executed automatically on every boot and is not overwritten by updates:
+The `linux.img` loopback rootfs is replaced during MiSTer updates, so any manual modifications to its internal `/etc/fstab` or `/etc/init.d/` are lost. Use `/media/fat/linux/user-startup.sh` instead — this script is executed automatically on every boot by the runtime OS and is not overwritten by updates:
 
 ```bash
 # /media/fat/linux/user-startup.sh
@@ -102,7 +102,7 @@ The `armv7sf-k3.2` repository contains ~2000+ packages including:
 | **exFAT limitations** | `/media/fat/` is exFAT, which lacks UNIX permissions, symlinks, and device nodes. Entware works around this by storing metadata in extended attributes, but some packages (those requiring real symlinks or special device files) fail. |
 
 > [!WARNING]
-> Entware's GCC toolchain compiles against Entware's own headers and libraries in `/opt/`. If you compile software that links against system libraries from the Buildroot initramfs (`/usr/lib/`, `/lib/`), expect ABI conflicts at runtime. Keep the entire development stack inside Entware (`opkg install gcc make pkg-config` and Entware `*-dev` packages).
+> Entware's GCC toolchain compiles against Entware's own headers and libraries in `/opt/`. If you compile software that links against system libraries from the core `linux.img` rootfs (`/usr/lib/`, `/lib/`), expect ABI conflicts at runtime. Keep the entire development stack inside Entware (`opkg install gcc make pkg-config` and Entware `*-dev` packages).
 
 ---
 
@@ -152,7 +152,7 @@ This approach is practical for building large projects natively on the DE10-Nano
 
 ## 4. Approach 3: Buildroot Rebuild with `BR2_PACKAGE_OPKG`
 
-You can embed `opkg` directly into the Buildroot initramfs:
+You can embed `opkg` directly into a custom `linux.img` (or an `mr-fusion` initramfs if you are modifying the installer):
 
 ```ini
 BR2_PACKAGE_OPKG=y
@@ -160,7 +160,7 @@ BR2_PACKAGE_OPKG=y
 
 ### 4.1 What This Gives You
 
-The `opkg` binary is compiled and installed into the initramfs. After boot, you can:
+The `opkg` binary is compiled and installed into the rootfs. After boot, you can:
 
 ```bash
 opkg install /media/fat/some-package.ipk
@@ -171,8 +171,8 @@ opkg install /media/fat/some-package.ipk
 | Problem | Why it matters |
 |---|---|
 | **No package repository** | Buildroot does not generate `Packages.gz` indexes or host repositories. You must build and host your own `.ipk` feeds. |
-| **Ephemeral installation** | Packages installed to `/` vanish on reboot because the initramfs is reconstructed from the embedded cpio. You would need to install into `/media/fat/` and set `OPKG_CONF_ROOT` accordingly. |
-| **ABI fragility** | Buildroot's uClibc-ng, kernel headers, and GCC version are pinned at build time. An `.ipk` built against a different Buildroot version may fail with `SIGILL` or `undefined symbol`. |
+| **Update overwrites** | Packages installed to `/` vanish when `linux.img` is updated by MiSTer's `update_all` script. You would need to install into `/media/fat/` and set `OPKG_CONF_ROOT` accordingly. |
+| **ABI fragility** | The toolchain's uClibc-ng, kernel headers, and GCC version are pinned at build time. An `.ipk` built against a different Buildroot version may fail with `SIGILL` or `undefined symbol`. |
 | **Feed maintenance** | You become a distribution maintainer: compiling packages, resolving cross-version dependencies, generating indexes, and signing packages. |
 
 > [!NOTE]
@@ -200,7 +200,7 @@ scp myutil root@mister:/media/fat/
 
 ### 5.2 Using the MiSTer GCC Toolchain
 
-The `MiSTer-devel/Main_MiSTer` repository uses a pre-built ARM GCC 10.2 toolchain for cross-compiling the HPS binary. This same toolchain can compile user utilities. See [HPS Binary — ARM Cross-Compilation Toolchain](../../../04_hps_binary/build/overview.md) for full setup instructions on Linux, WSL2, and macOS.
+The `MiSTer-devel/Main_MiSTer` repository uses a pre-built ARM GCC 10.2 toolchain for cross-compiling the HPS binary. This same toolchain can compile user utilities. See [HPS Binary — ARM Cross-Compilation Toolchain](../../../04_hps_binary/build/toolchain.md) for full setup instructions on Linux, WSL2, and macOS.
 
 ```bash
 # From the Main_MiSTer Makefile
@@ -226,9 +226,9 @@ Source: `MiSTer-devel/Main_MiSTer` Makefile
 |---|---|---|---|---|
 | **Entware** | Low (one-time setup) | Yes (`/media/fat/opt`) | ~2000+ | General-purpose utilities, compilers, interpreters |
 | **Debian chroot** | Medium | Yes (`/media/fat/debian`) | 60,000+ | Full development environment, complex builds |
-| **Buildroot + opkg** | Very high | No (initramfs ephemeral) | Self-maintained | Custom embedded distributions only |
+| **Buildroot + opkg** | Very high | No (wiped on `linux.img` update) | Self-maintained | Custom embedded distributions only |
 | **Cross-compile static** | Low per binary | Yes (`/media/fat/`) | N/A (single binaries) | One-off utilities, custom tools |
-| **Buildroot rebuild** | Medium | Yes (in new `linux.img`) | All of Buildroot | System-level packages that must be in initramfs |
+| **Custom linux.img rebuild** | Medium | Yes (in new `linux.img`) | All of Buildroot | System-level packages that must be in the rootfs |
 
 ---
 
@@ -242,13 +242,13 @@ Source: `MiSTer-devel/Main_MiSTer` Makefile
 | **Yocto** | Optional `rpm`/`dpkg`/`opkg` | Package management is opt-in; many images are monolithic |
 | **MiSTeX** | Host OS package manager | SBC runs full Linux with persistent storage |
 
-MiSTer's Entware pattern is unique among these: it augments an ephemeral initramfs with a persistent overlay on a non-native filesystem (exFAT), using bind mounts and a user startup hook (`user-startup.sh`) rather than integrating with the init system.
+MiSTer's Entware pattern is unique among these: it augments a static, monolithic loopback rootfs with a persistent overlay on a non-native filesystem (exFAT), using bind mounts and a user startup hook (`user-startup.sh`) rather than integrating with the init system.
 
 ---
 
 ## 8. Cross-References
 
-- [Buildroot Overview](buildroot_overview.md) — Architecture, initramfs model, output structure
+- [Buildroot Overview](buildroot_overview.md) — Architecture, installer model, output structure
 - [Custom Packages](custom_packages.md) — Adding packages via defconfig + rebuild
 - [HPS Linux — Filesystem](../filesystem/) — SD card runtime layout (`/media/fat/`)
 - [Buildroot Manual — About Buildroot](https://buildroot.org/downloads/manual/manual.html#_about_buildroot)
