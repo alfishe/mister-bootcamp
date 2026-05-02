@@ -26,16 +26,17 @@
 | 1 | `00_overview/README.md` | ✅ | Target: Deep | Evolution from MiST/Minimig, HW vs SW emulation, platform success factors |
 | 2 | `00_overview/getting_started.md` | ✅ | Target: Adequate | Persona-based guide: retro gamers, arcade builders, CRT enthusiasts, students, software devs, FPGA engineers, tinkerers, preservationists |
 | 5 | `01_system_architecture/platform_architecture.md` | ✅ | Target: Deep | Abstract SoC concepts, FPGA+HPS pipelines, physical data flows |
-| 6 | `02_hardware_platforms/de10_nano.md` | 📋 | Target: Deep | Physical board reference, specs, pins |
+| 6 | `02_hardware_platforms/de10_nano.md` | ✅ | Target: Deep | Physical board reference, specs, pins |
 | 7 | `02_hardware_platforms/addon_boards.md` | 📋 | Target: Adequate | Physical addons: SDRAM, IO board, USB hub, Direct Video |
 
 ## Phase 2 — Host Software (The ARM/HPS Control Plane)
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 8 | `03_hps_linux/custom_linux.md` | 📋 | Target: Deep | Buildroot, kernel, U-Boot documentation |
+| 8 | `03_hps_linux/alternative_distros.md` | ✅ | Deep | Debian, Ubuntu, Arch Linux ARM on MiSTer; MiSTerArch, MOnSieurFPGA |
+| 8a| `03_hps_linux/custom_linux.md` | 📋 | Superseded | Covered by buildroot/, kernel/, uboot/, image_build/, alternative_distros.md |
 | 9 | `04_hps_binary/architecture.md` | 📋 | Target: Deep | Main_MiSTer module map |
-| 10| `04_hps_binary/build/overview.md` | 📋 | Target: Deep | ARM toolchain, Makefile, cross-compile |
+| 10| `04_hps_binary/build/overview.md` | ✅ | Deep | ARM toolchain, Makefile, cross-compile |
 | 11| `05_configuration/mister_ini_guide.md` | 📋 | Target: Adequate | User-facing INI guide |
 | 12| `05_configuration/osd.md` | 🔀 | Target: Adequate | OSD rendering and navigation architecture |
 

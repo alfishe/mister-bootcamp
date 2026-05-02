@@ -81,6 +81,7 @@
 | [kernel/](03_hps_linux/kernel/) | Linux kernel patches, Cyclone V SoC support, FPGA Manager driver |
 | [uboot/](03_hps_linux/uboot/) | U-Boot patches, boot sequence, warm/cold reboot, OCRAM handoff |
 | [buildroot/](03_hps_linux/buildroot/) | Buildroot-based image generation, package selection, custom overlays |
+| [alternative_distros.md](03_hps_linux/alternative_distros.md) | Debian, Ubuntu, Arch Linux ARM on MiSTer; MiSTerArch and MOnSieurFPGA |
 | [device_tree/](03_hps_linux/device_tree/) | Device tree for DE10-Nano, HPS↔FPGA bridge bindings |
 | [filesystem/](03_hps_linux/filesystem/) | SD card layout (`/media/fat/`), partition scheme |
 | [scripts/](03_hps_linux/scripts/) | System scripts: startup, networking, USB mount, core switching |
