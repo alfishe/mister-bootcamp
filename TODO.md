@@ -27,7 +27,7 @@
 | 2 | `00_overview/getting_started.md` | ✅ | Target: Adequate | Persona-based guide: retro gamers, arcade builders, CRT enthusiasts, students, software devs, FPGA engineers, tinkerers, preservationists |
 | 5 | `01_system_architecture/platform_architecture.md` | ✅ | Target: Deep | Abstract SoC concepts, FPGA+HPS pipelines, physical data flows |
 | 6 | `02_hardware_platforms/de10_nano.md` | ✅ | Target: Deep | Physical board reference, specs, pins |
-| 7 | `02_hardware_platforms/addon_boards.md` | 📋 | Target: Adequate | Physical addons: SDRAM, IO board, USB hub, Direct Video |
+| 7 | `02_hardware_platforms/addon_boards.md` | ✅ | Deep | Physical addons: SDRAM, IO board, USB hub, Direct Video |
 
 ## Phase 2 — Host Software (The ARM/HPS Control Plane)
 
@@ -37,8 +37,8 @@
 | 8a| `03_hps_linux/custom_linux.md` | 📋 | Superseded | Covered by buildroot/, kernel/, uboot/, image_build/, alternative_distros.md |
 | 9 | `04_hps_binary/build/overview.md` | ✅ | Deep | Main_MiSTer binary architecture, modules, startup sequence |
 | 10| `04_hps_binary/build/toolchain.md` | ✅ | Deep | ARM toolchain, Makefile, cross-compile |
-| 11| `05_configuration/mister_ini_guide.md` | 📋 | Target: Adequate | User-facing INI guide |
-| 12| `05_configuration/osd.md` | 🔀 | Target: Adequate | OSD rendering and navigation architecture |
+| 11| `05_configuration/mister_ini_guide.md` | ✅ | Deep | User-facing INI guide |
+| 12| `05_configuration/osd.md` | ✅ | Deep | OSD rendering, input mapping, and alpha blending architecture |
 
 ## Phase 3 — Hardware Emulation (The FPGA Plane)
 
@@ -95,7 +95,7 @@ Files from `/Volumes/TB4-4Tb/Projects/mister/doc/existing/` to be migrated:
 | `overview.md` | `00_overview/platform_architecture.md` | ✅ | Replaced by new platform architecture |
 | `hps-bus.md` | `06_fpga_subsystem/hps_bus.md` | 🔀 | Copied and breadcrumb added |
 | `spi-protocol.md` | `06_fpga_subsystem/spi_protocol.md` | 🔀 | Copied and breadcrumb added |
-| `core-configuration.md` | `05_configuration/core_configuration_legacy.md` | 🔀 | Copied, needs split to conf_str.md + mister_ini.md |
+| `core-configuration.md` | `05_configuration/` | ✅ | Split into `conf_str.md` and `mister_ini_guide.md` |
 | `command-reference.md` | `17_references/uio_command_reference.md` | 🔀 | Copied and breadcrumb added |
 | `memory-map.md` | `02_hardware_platforms/memory_map.md` | 🔀 | Copied and breadcrumb added |
 | `fpga-loading.md` | `06_fpga_subsystem/fpga_loading.md` | 🔀 | Copied and breadcrumb added |

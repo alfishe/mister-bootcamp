@@ -108,14 +108,11 @@
 #### 06 — FPGA Subsystem
 | File | Topic |
 |---|---|
-| [sys_top.md](06_fpga_subsystem/sys_top.md) | Top-level hardware abstraction: PLL tree, bridge wiring, GPO/GPI, HDMI/VGA muxing |
-| [hps_io_module.md](06_fpga_subsystem/hps_io_module.md) | `hps_io.sv` deep dive: port map, parameters, opcode dispatch |
-| [hps_bus.md](06_fpga_subsystem/hps_bus.md) | HPS_BUS[48:0] — the 49-bit parallel bus |
-| [spi_protocol.md](06_fpga_subsystem/spi_protocol.md) | SPI-over-GPO: software-emulated SPI via FPGA Manager registers |
+| [fpga_framework_overview.md](06_fpga_subsystem/fpga_framework_overview.md) | Framework Architecture & Overview, Shell & Core paradigm, Clocking, Pin mapping |
+| [hps_bridge_reference.md](06_fpga_subsystem/hps_bridge_reference.md) | HPS Bridge Reference: SSPI protocol, HPS_BUS mapping, GPO/GPI control |
+| [video_audio_pipelines.md](06_fpga_subsystem/video_audio_pipelines.md) | Video & Audio pipelines: Analog vs Digital, `ascal`, `video_mixer`, audio DACs |
+| [memory_controllers.md](06_fpga_subsystem/memory_controllers.md) | Memory Controllers: Deterministic SDRAM (`sdram.sv`) vs HPS DDR3 (`ddram.v`) |
 | [fpga_loading.md](06_fpga_subsystem/fpga_loading.md) | RBF bitstream loading: FPGA Manager state machine |
-| [sdram_controller.md](06_fpga_subsystem/sdram_controller.md) | `sdram.sv`: bank interleaving, refresh, dual-port |
-| [ddr3_architecture.md](06_fpga_subsystem/ddr3_architecture.md) | F2H AXI bridge, DDR3 port allocation, bandwidth budget |
-| [gpo_gpi_registers.md](06_fpga_subsystem/gpo_gpi_registers.md) | GPO/GPI register interface |
 
 #### 07 — FPGA Cores Architecture
 | File | Topic |

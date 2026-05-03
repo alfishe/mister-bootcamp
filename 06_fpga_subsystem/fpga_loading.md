@@ -1,16 +1,15 @@
-[← FPGA Subsystem](../README.md)
-
+[← FPGA Subsystem](README.md) · [↑ Knowledge Base](../README.md)
 # FPGA Bitstream Loading
 
 Loading a new core into the FPGA fabric requires:
-1. Placing the CPU into core reset.
+1. Asserting global reset on the active FPGA core.
 2. Tearing down the HPS↔FPGA AXI bridges.
 3. Writing the RBF (Raw Binary File) bitstream into the FPGA Manager data port.
 4. Waiting for configuration to complete.
 5. Re-enabling the bridges.
 6. Re-launching the MiSTer binary for the new core.
 
-Source: `Main_MiSTer/fpga_io.cpp`
+Source: [`Main_MiSTer/fpga_io.cpp`](https://github.com/MiSTer-devel/Main_MiSTer/blob/master/fpga_io.cpp)
 
 ---
 
@@ -31,8 +30,9 @@ FPGA Manager Registers (all at 0xFF706xxx):
   0x014  (GPI)     — General Purpose Input
 ```
 
-Physical address mapping: `SOCFPGA_FPGAMGRREGS_ADDRESS = 0xFF706000`
-Configuration data port: `SOCFPGA_FPGAMGRDATA_ADDRESS  = 0xFFB90000`
+Physical address mapping (defined in `Main_MiSTer/fpga_base_addr_ac5.h`): 
+`SOCFPGA_FPGAMGRREGS_ADDRESS = 0xFF706000`
+`SOCFPGA_FPGAMGRDATA_ADDRESS  = 0xFFB90000`
 
 ---
 
@@ -74,7 +74,7 @@ sequenceDiagram
 ## Code: `socfpga_load()`
 
 ```c
-// fpga_io.cpp
+// Main_MiSTer/fpga_io.cpp — socfpga_load
 static int socfpga_load(const void *rbf_data, size_t rbf_size)
 {
     // 1. Initialize FPGA Manager
@@ -105,7 +105,7 @@ static int socfpga_load(const void *rbf_data, size_t rbf_size)
 ## Code: AXI Bridge Control (`do_bridge`)
 
 ```c
-// fpga_io.cpp
+// Main_MiSTer/fpga_io.cpp — do_bridge
 static void do_bridge(uint32_t enable)
 {
     if (enable) {
@@ -125,55 +125,14 @@ static void do_bridge(uint32_t enable)
 }
 ```
 
----
+> [!CAUTION]
+> Tearing down the AXI bridges (`nic301_regs->remap = 1`) prior to loading the FPGA bitstream is absolutely critical. Reconfiguring the FPGA while the HPS is actively transacting across the H2F or LWH2F bridges will instantly lock up the AXI bus and crash the Linux kernel.
 
-## Warm vs. Cold Reboot
-
-```c
-// fpga_io.cpp
-void reboot(int cold)
-{
-    sync();
-    fpga_core_reset(1);
-    usleep(500000);
-
-    // Write reboot flag to shared OCRAM
-    volatile uint32_t* flg = (volatile uint32_t*)shmem_map(0x1FFFF000, 0x1000);
-    flg[0xF08/4] = cold ? 0 : 0xBEEFB001;  // warm reboot magic
-    shmem_unmap(...);
-
-    // Trigger warm reset via Reset Manager
-    writel(1, &reset_regs->ctrl);
-    while(1) sleep(1);
-}
-```
-
-A **warm reboot** (`0xBEEFB001` flag) causes u-boot to skip DRAM init and
-immediately launch Linux.  A **cold reboot** reinitialises all hardware.
+> [!NOTE]
+> For details on how `Main_MiSTer` orchestrates the system-wide reboot cycle to load new cores via U-Boot and OCRAM handoff, see the [Global Boot Sequence](../01_system_architecture/boot_sequence.md) reference.
 
 ---
 
-## Core Environment Handoff
-
-Before rebooting to load a new core, MiSTer writes a small environment block
-into OCRAM at `0x1FFFF000`:
-
-```c
-// fpga_io.cpp
-static int make_env(const char *name, const char *cfg)
-{
-    volatile char* str = (volatile char*)shmem_map(0x1FFFF000, 0x1000);
-    *str++ = 0x21; *str++ = 0x43; *str++ = 0x65; *str++ = 0x87; // magic
-    // Write: core="corename"\n
-    // Then copy CFG file content
-    FileLoad(cfg, (void*)str, 0);
-}
-```
-
-This OCRAM survives a warm reset and is read by the MiSTer binary on next
-start to know which core to load.
-
----
 
 ## CD Ratio (MSEL)
 
@@ -186,8 +145,17 @@ clocks configuration data:
 | 1 | 01 | 32-bit | ×4 |
 | 1 | 10 | 32-bit | ×8 |
 | 0 | 00 | 16-bit | ×1 |
-| 0 | 01 | 16-bit | ×2 |
 | 0 | 10 | 16-bit | ×4 |
 
 The DE10-Nano uses MSEL = `01010` (passive parallel, 16-bit, CD ratio ×2)
 by default.
+
+---
+
+## Platform Context: MiSTer vs. Standard Linux FPGA Manager
+
+In a typical Yocto/Debian embedded Linux environment on the Cyclone V, configuring the FPGA is handled by the kernel's `fpga-mgr` framework via device tree overlays (DTOs) or the `/sys/class/fpga_manager` sysfs interface.
+
+MiSTer bypasses the Linux kernel entirely for FPGA configuration. Instead, `Main_MiSTer` maps the physical registers of the FPGA Manager and Reset Manager into userspace via `/dev/mem`. This approach yields two major benefits:
+1.  **Deterministic Latency**: Bypassing sysfs overhead allows `Main_MiSTer` to blast the `.rbf` file into the data port using optimized ARM assembly burst instructions (`ldmia`/`stmia`), resulting in near-instant core loading.
+2.  **Simplified Orchestration**: It allows MiSTer to perfectly synchronize the tearing down of AXI bridges and the suspension of Linux background tasks before configuration, mitigating the risk of kernel panics caused by severed AXI transactions.

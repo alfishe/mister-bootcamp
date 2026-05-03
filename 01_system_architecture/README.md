@@ -11,6 +11,7 @@ This section covers the physical and logical architecture of the MiSTer platform
 | Article | Topic | Quality |
 |---|---|---|
 | [Platform Architecture](platform_architecture.md) | Complete system architecture: Cyclone V SoC, bridge design, board stack, data flow pipelines, platform comparison | ✅ Deep |
+| [Global Boot Sequence](boot_sequence.md) | The transition from cold power-on, through U-Boot and Linux, into core execution and the warm reboot mechanism | ✅ Deep |
 
 ## Related Sections
 
