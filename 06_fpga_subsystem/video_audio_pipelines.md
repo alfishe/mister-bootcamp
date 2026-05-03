@@ -59,7 +59,13 @@ The signal flows from the core, through `video_mixer.sv`, through the OSD blende
 ### 1.2 The Digital Path (Polyphase Scaler)
 For HDMI output, the signal must be converted to standard HDTV resolutions (720p, 1080p, 1440p) and optionally buffered to match the display's refresh rate (e.g., matching a 50Hz core to a 60Hz display, though v-sync is highly recommended).
 
-This is handled by **`ascal.vhd`**, a sophisticated, multi-tap polyphase scaler.
+This is handled by **`ascal.sv`** (and the original `ascal.vhd`), a sophisticated, multi-tap polyphase scaler.
+
+> [!NOTE]
+> **Deep Dive: Scaling Mechanics**
+> For a detailed explanation of how the polyphase scaler operates at the gate level, see:
+> * [ascal.sv Architecture](../09_video_audio/ascal_architecture.md) — Internal logic and clock domains.
+> * [Scaler Theory & Polyphase Coefficients](../09_video_audio/scaler_theory_and_polyphase.md) — The math of FIR taps and coefficient vectors.
 
 *   **Framebuffer Dependency:** `ascal` cannot operate on the fly. It requires a massive framebuffer to store the incoming core frames before applying 2D interpolation algorithms.
 *   **F2H AXI Bridge:** Because the FPGA's internal Block RAM (M10K) is too small for a 1080p framebuffer, `ascal` uses the **DDR3 memory** on the HPS side. It reads and writes to DDR3 via the 64-bit F2H AXI Bridge (managed by the `ddram.v` wrapper).

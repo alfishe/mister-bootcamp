@@ -139,5 +139,14 @@ Retro consoles rely on highly specific master clocks (e.g., the Amiga's 28.37516
 
 By splitting the clock domains, the framework handles the complex timing of modern digital interfaces (HDMI, SPDIF), leaving the core developer free to focus solely on achieving silicon-accurate logic frequencies.
 
-### 4.3 Framework Integration (`Template_MiSTer`)
-The framework is distributed as the `Template_MiSTer` repository. A core developer adds it as a Git submodule in their `sys/` directory. If the framework receives an update (e.g., a new HDMI scaler feature), the developer simply pulls the latest `sys/` submodule commit and recompiles. The core logic remains entirely untouched.
+---
+
+## 5. Performance & Development
+
+Developing for the MiSTer framework requires balancing logic complexity with the physical limits of the Cyclone V FPGA.
+
+*   **[Performance Metrics](fpga_performance_metrics.md)**: Details on resource utilization (LEs, ALMs, BRAM) across representative cores and the importance of timing closure.
+*   **[Compilation Guide](fpga_compilation_guide.md)**: Best practices for the Quartus 17.0 toolchain, seed sweeping, and achieving stable builds for high-complexity cores.
+*   **[SDRAM Timing Theory](sdram_timing_theory.md)**: Deep dive into the phase alignment required to drive external memory at 100MHz+ frequencies.
+*   **[Input Latency & SNAC](input_latency_and_snac.md)**: Understanding the zero-lag path for OEM controllers via physical pin mapping.
+*   **[Debugging Tools](fpga_debugging_tools.md)**: Using SignalTap II and the HPS-to-FPGA telemetry bus for hardware-level troubleshooting.

@@ -139,9 +139,10 @@
 #### 09 — Video & Audio
 | File | Topic |
 |---|---|
-| [hdmi_scaler.md](09_video_audio/hdmi_scaler.md) | `ascal.vhd`: polyphase scaler, DDR3 framebuffer |
-| [audio_pipeline.md](09_video_audio/audio_pipeline.md) | Sigma-delta DAC, I2S, HDMI audio, filters |
-| [analog_video.md](09_video_audio/analog_video.md) | IO board analog output, direct video, CRT |
+| [ascal_deep_dive.md](09_video_audio/ascal_deep_dive.md) | **Deep** architectural analysis of the Avalon Scaler |
+| [ascal_architecture.md](09_video_audio/ascal_architecture.md) | Overview of the VHDL and SystemVerilog scaler implementations |
+| [polyphase_scaling_theory.md](09_video_audio/polyphase_scaling_theory.md) | Mathematical foundations of polyphase video scaling |
+| [audio_pipeline_overview.md](09_video_audio/audio_pipeline_overview.md) | Sigma-delta DAC, I2S interfacing, and audio mixing |
 
 #### 10 — Input Devices
 | File | Topic |
