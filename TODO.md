@@ -46,8 +46,14 @@
 |---|---|---|---|---|
 | 13| `06_fpga_subsystem/sys_top.md` | ✅ | Deep | Top-level hardware abstraction: ports, submodule map, SSPI command decoder, video/audio/memory pipelines, conditional compilation |
 | 14| `06_fpga_subsystem/hps_io_module.md` | ✅ | Deep | `hps_io.sv` command decoder: UIO commands, file I/O engine, joystick/keyboard/mouse, CONF_STR, status word, SD card, EXT_BUS |
-| 15| `06_fpga_subsystem/sdram_controller.md` | 📋 | Target: Deep | sdram.sv deep dive |
+| 15| `06_fpga_subsystem/sdram_controller.md` | ✅ | Deep | Three SDRAM controller variants, state machines, init, refresh, 8/16-bit mode, dual-chip, burst, cache snoop |
 | 16| `06_fpga_subsystem/ddr3_architecture.md` | ✅ | Deep | F2SDRAM bridge, sysmem_lite, f2sdram_safe_terminator, ddr_svc arbiter, ddram.sv wrapper, ddram_ctrl.v cached controller, HPS bridge management |
+| 16a| `06_fpga_subsystem/sdram_timing_theory.md` | ✅ | Deep | altddio_out clock inversion, write/read path timing budgets, PLL phase shift, runtime reconfiguration, frequency-specific requirements, MemTest validation |
+| 16b| `06_fpga_subsystem/memory_controllers.md` | ✅ | Adequate | SDRAM vs DDR3 architecture, controller variants table, DDRAM wrapper, dual-path Minimig diagram, DDR3 contention profiles |
+| 16c| `06_fpga_subsystem/fpga_compilation_guide.md` | ✅ | Adequate | Quartus Q13/Q17/Q20+ comparison, SDC constraint examples, CDC false paths, seed sweeping, DSE II, timing failure patterns |
+| 16d| `06_fpga_subsystem/fpga_debugging_tools.md` | ✅ | Adequate | SignalTap II BRAM cost table, io_dout telemetry, UART printf, status word, MemTest as validation, GPIO oscilloscope probing |
+| 16e| `06_fpga_subsystem/fpga_performance_metrics.md` | ✅ | Adequate | Verified MemTest compilation data, framework overhead analysis, M10K budget, console/computer/arcade utilization tables, power/thermal |
+| 16f| `06_fpga_subsystem/input_latency_and_snac.md` | ✅ | Deep | Three input paths with Mermaid diagram, USB latency budget, SNAC sub-µs budget, LLAPI comparison, per-core protocol summary, input-to-display measurement
 | 17| `07_fpga_cores_architecture/template_walkthrough.md` | ✅ | Deep | Core developer entry point: repo structure, emu module, CONF_STR, video/audio/memory contracts, common pitfalls |
 | 18| `07_fpga_cores_architecture/build/overview.md` | ✅ | Deep | Quartus compilation pipeline: QPF/QSF structure, TCL automation, build_id.tcl, RBF generation, CI/CD, seed sweeping, Q13 vs Q17 |
 | 19| `08_fpga_cores_catalog/arcade_and_mra.md` | ✅ | Deep | MRA XML schema, ROM assembly pipeline, interleave/map, DIP switches, NVRAM, MGL format, Joteco framework |

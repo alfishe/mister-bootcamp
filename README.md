@@ -111,15 +111,16 @@
 | [sys_top.md](06_fpga_subsystem/sys_top.md) | **Deep** — Top-level hardware abstraction: ports, submodule map, SSPI command decoder, video/audio/memory pipelines, conditional compilation |
 | [hps_io_module.md](06_fpga_subsystem/hps_io_module.md) | **Deep** — `hps_io.sv` command decoder: UIO commands, file I/O engine, joystick/keyboard/mouse, CONF_STR, status word, SD card, EXT_BUS |
 | [ddr3_architecture.md](06_fpga_subsystem/ddr3_architecture.md) | **Deep** — F2SDRAM bridge, sysmem_lite, f2sdram_safe_terminator, ddr_svc arbiter, ddram.sv, ddram_ctrl.v, HPS bridge management |
+| [sdram_controller.md](06_fpga_subsystem/sdram_controller.md) | **Deep** — Three SDRAM controller variants, state machines, init, refresh scheduling, 8/16-bit mode, dual-chip, burst, Minimig cache+snoop |
 | [fpga_framework_overview.md](06_fpga_subsystem/fpga_framework_overview.md) | Framework Architecture & Overview, Shell & Core paradigm, Clocking, Pin mapping |
 | [hps_bridge_reference.md](06_fpga_subsystem/hps_bridge_reference.md) | HPS Bridge Reference: SSPI protocol, HPS_BUS mapping, GPO/GPI control |
 | [video_audio_pipelines.md](06_fpga_subsystem/video_audio_pipelines.md) | Video & Audio pipelines: Analog vs Digital, `ascal`, `video_mixer`, audio DACs |
-| [memory_controllers.md](06_fpga_subsystem/memory_controllers.md) | Memory Controllers: Deterministic SDRAM (`sdram.sv`) vs HPS DDR3 (`ddram.v`) |
-| [sdram_timing_theory.md](06_fpga_subsystem/sdram_timing_theory.md) | SDRAM Timing Theory & Phase Alignment |
-| [fpga_performance_metrics.md](06_fpga_subsystem/fpga_performance_metrics.md) | FPGA Performance Metrics & Utilization |
-| [fpga_compilation_guide.md](06_fpga_subsystem/fpga_compilation_guide.md) | FPGA Compilation & Timing Closure |
-| [fpga_debugging_tools.md](06_fpga_subsystem/fpga_debugging_tools.md) | FPGA Debugging & Telemetry Tools |
-| [input_latency_and_snac.md](06_fpga_subsystem/input_latency_and_snac.md) | Input Latency & SNAC |
+| [memory_controllers.md](06_fpga_subsystem/memory_controllers.md) | SDRAM vs DDR3 architecture, controller variants, dual-path Minimig diagram, DDR3 contention profiles |
+| [sdram_timing_theory.md](06_fpga_subsystem/sdram_timing_theory.md) | altddio_out clock inversion, timing budgets, PLL phase shift, frequency-specific requirements, MemTest validation |
+| [fpga_performance_metrics.md](06_fpga_subsystem/fpga_performance_metrics.md) | Verified compilation data, framework overhead, console/computer/arcade utilization tables, M10K budget, power/thermal |
+| [fpga_compilation_guide.md](06_fpga_subsystem/fpga_compilation_guide.md) | Quartus Q13/Q17/Q20+, SDC constraints, CDC false paths, seed sweeping, timing failure patterns |
+| [fpga_debugging_tools.md](06_fpga_subsystem/fpga_debugging_tools.md) | SignalTap II BRAM cost, io_dout telemetry, UART printf, status word, GPIO oscilloscope probing |
+| [input_latency_and_snac.md](06_fpga_subsystem/input_latency_and_snac.md) | **Deep** — Three input paths, USB latency budget, SNAC sub-µs budget, LLAPI, per-core protocol summary, input-to-display measurement |
 | [fpga_loading.md](06_fpga_subsystem/fpga_loading.md) | RBF bitstream loading: FPGA Manager state machine |
 
 #### 07 — FPGA Cores Architecture
