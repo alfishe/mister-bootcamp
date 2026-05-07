@@ -1,6 +1,6 @@
 # MiSTer FPGA Knowledge Base — TODO & Gap Analysis
 
-> **Last updated**: 2026-04-30
+> **Last updated**: 2026-05-06
 >
 > This file tracks every planned article, its current status, quality tier, and priority.
 > See [AGENTS.md](AGENTS.md) for quality tier definitions (Deep / Adequate / Shallow).
@@ -44,15 +44,15 @@
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 13| `06_fpga_subsystem/sys_top.md` | 📋 | Target: Deep | Top-level hardware abstraction |
-| 14| `06_fpga_subsystem/hps_io_module.md` | 📋 | Target: Deep | Central framework module |
+| 13| `06_fpga_subsystem/sys_top.md` | ✅ | Deep | Top-level hardware abstraction: ports, submodule map, SSPI command decoder, video/audio/memory pipelines, conditional compilation |
+| 14| `06_fpga_subsystem/hps_io_module.md` | ✅ | Deep | `hps_io.sv` command decoder: UIO commands, file I/O engine, joystick/keyboard/mouse, CONF_STR, status word, SD card, EXT_BUS |
 | 15| `06_fpga_subsystem/sdram_controller.md` | 📋 | Target: Deep | sdram.sv deep dive |
-| 16| `06_fpga_subsystem/ddr3_architecture.md` | 📋 | Target: Deep | F2H AXI, DDR3 allocation |
-| 17| `07_fpga_cores_architecture/template_walkthrough.md` | 📋 | Target: Deep | Core developer entry point |
-| 18| `07_fpga_cores_architecture/build/overview.md` | 📋 | Target: Deep | Quartus, QPF → RBF pipeline, CI automation |
-| 19| `08_fpga_cores_catalog/arcade_and_mra.md` | 📋 | Target: Deep | MRA XML, ROM merging, DIP switches |
-| 20| `08_fpga_cores_catalog/minimig.md` | 📋 | Target: Deep | Cross-link to Amiga Bootcamp |
-| 21| `08_fpga_cores_catalog/ao486.md` | 📋 | Target: Deep | 486SX, IDE DMA, VGA, Sound Blaster |
+| 16| `06_fpga_subsystem/ddr3_architecture.md` | ✅ | Deep | F2SDRAM bridge, sysmem_lite, f2sdram_safe_terminator, ddr_svc arbiter, ddram.sv wrapper, ddram_ctrl.v cached controller, HPS bridge management |
+| 17| `07_fpga_cores_architecture/template_walkthrough.md` | ✅ | Deep | Core developer entry point: repo structure, emu module, CONF_STR, video/audio/memory contracts, common pitfalls |
+| 18| `07_fpga_cores_architecture/build/overview.md` | ✅ | Deep | Quartus compilation pipeline: QPF/QSF structure, TCL automation, build_id.tcl, RBF generation, CI/CD, seed sweeping, Q13 vs Q17 |
+| 19| `08_fpga_cores_catalog/arcade_and_mra.md` | ✅ | Deep | MRA XML schema, ROM assembly pipeline, interleave/map, DIP switches, NVRAM, MGL format, Joteco framework |
+| 20| `08_fpga_cores_catalog/minimig.md` | ✅ | Deep | Amiga OCS/ECS/AGA emulation, DDR3 Fast RAM via ddram_ctrl.v, RTG, a314 shared folder, CD32 |
+| 21| `08_fpga_cores_catalog/ao486.md` | ✅ | Deep | 486SX soft CPU, Sound Blaster 16/OPL3, SVGA, IDE/CD-ROM, UART networking, DOS/Windows compat |
 | 22| `08_fpga_cores_catalog/nes.md` | 📋 | Target: Adequate | Mappers, PPU/APU, iNES/NES 2.0 |
 | 23| `08_fpga_cores_catalog/snes.md` | 📋 | Target: Adequate | Coprocessors, 5A22/S-PPU/S-SMP |
 | 24| `08_fpga_cores_catalog/genesis.md` | 📋 | Target: Adequate | 68000+Z80, VDP, YM2612, Mega CD, 32X |
@@ -63,10 +63,10 @@
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 27| `09_video_audio/hdmi_scaler.md` | 📋 | Target: Deep | ascal.vhd polyphase scaler |
-| 28| `09_video_audio/audio_pipeline.md` | 📋 | Target: Deep | DAC, I2S, HDMI audio, filters |
-| 29| `09_video_audio/analog_video.md` | 📋 | Target: Adequate | VGA, composite, S-Video, CRT |
-| 30| `10_input_devices/snac_llapi.md` | 📋 | Target: Deep | Direct controller wiring to FPGA |
+| 27| `09_video_audio/hdmi_scaler.md` | ✅ | Deep | Superseded by `ascal_deep_dive.md` (67.7 KB Deep article) |
+| 28| `09_video_audio/audio_pipeline.md` | ✅ | Deep | Superseded by `audio_pipeline_deep_dive.md` — source-grounded Deep upgrade with audio_out.v analysis |
+| 29| `09_video_audio/analog_video.md` | ✅ | Deep | Superseded by `analog_direct_video_architecture.md` — source-grounded Deep upgrade with vga_out.sv + yc_out.sv |
+| 30| `10_input_devices/snac_llapi.md` | ✅ | Deep | SNAC hardware interface, per-core OEM protocols (NES/SNES/Genesis/PSX/N64), LLAPI wireless, 74LVC245 level shifting |
 | 31| `11_storage/file_transfer.md` | 🔀 | Target: Adequate | VHD mounting, SD card |
 | 32| `12_networking/wifi_setup.md` | 📋 | Target: Adequate | WiFi, SSH, FTP, Samba |
 
@@ -74,10 +74,10 @@
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
-| 33| `13_save_states/save_state_architecture.md` | 📋 | Target: Deep | DDR3 snapshot/restore, rewind |
+| 33| `13_save_states/save_state_architecture.md` | ✅ | Deep | DDR3 shared-memory save states, CONF_STR SS tag, process_ss() 4-slot polling, sector I/O alternative, per-core implementations |
 | 34| `14_extensions/retroachievements.md` | 📋 | Target: Deep | odelot fork, DDRAM bridge, rcheevos |
-| 35| `14_extensions/cheats.md` | 📋 | Target: Adequate | Cheat engine, .cht format |
-| 36| `14_extensions/mra_format.md` | 📋 | Target: Deep | MRA XML schema |
+| 35| `14_extensions/cheats.md` | ✅ | Adequate | Cheat engine: ZIP/CRC discovery, Game Genie/PAR formats, FIO index 255 delivery, arcade MRA cheats, N64 cheat system, lazy loading |
+| 36| `14_extensions/mra_format.md` | ✅ | Deep | Superseded by `arcade_and_mra.md` (620 lines Deep article in 08 catalog) |
 | 37| `15_ecosystem/README.md` | 🔀 | Target: Adequate | Project catalog index: alternative platforms, commercial products, tools, content |
 | 37a| `15_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
 | 38| `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | SBC+FPGA alternative platform port |

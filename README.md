@@ -108,29 +108,38 @@
 #### 06 — FPGA Subsystem
 | File | Topic |
 |---|---|
+| [sys_top.md](06_fpga_subsystem/sys_top.md) | **Deep** — Top-level hardware abstraction: ports, submodule map, SSPI command decoder, video/audio/memory pipelines, conditional compilation |
+| [hps_io_module.md](06_fpga_subsystem/hps_io_module.md) | **Deep** — `hps_io.sv` command decoder: UIO commands, file I/O engine, joystick/keyboard/mouse, CONF_STR, status word, SD card, EXT_BUS |
+| [ddr3_architecture.md](06_fpga_subsystem/ddr3_architecture.md) | **Deep** — F2SDRAM bridge, sysmem_lite, f2sdram_safe_terminator, ddr_svc arbiter, ddram.sv, ddram_ctrl.v, HPS bridge management |
 | [fpga_framework_overview.md](06_fpga_subsystem/fpga_framework_overview.md) | Framework Architecture & Overview, Shell & Core paradigm, Clocking, Pin mapping |
 | [hps_bridge_reference.md](06_fpga_subsystem/hps_bridge_reference.md) | HPS Bridge Reference: SSPI protocol, HPS_BUS mapping, GPO/GPI control |
 | [video_audio_pipelines.md](06_fpga_subsystem/video_audio_pipelines.md) | Video & Audio pipelines: Analog vs Digital, `ascal`, `video_mixer`, audio DACs |
 | [memory_controllers.md](06_fpga_subsystem/memory_controllers.md) | Memory Controllers: Deterministic SDRAM (`sdram.sv`) vs HPS DDR3 (`ddram.v`) |
+| [sdram_timing_theory.md](06_fpga_subsystem/sdram_timing_theory.md) | SDRAM Timing Theory & Phase Alignment |
+| [fpga_performance_metrics.md](06_fpga_subsystem/fpga_performance_metrics.md) | FPGA Performance Metrics & Utilization |
+| [fpga_compilation_guide.md](06_fpga_subsystem/fpga_compilation_guide.md) | FPGA Compilation & Timing Closure |
+| [fpga_debugging_tools.md](06_fpga_subsystem/fpga_debugging_tools.md) | FPGA Debugging & Telemetry Tools |
+| [input_latency_and_snac.md](06_fpga_subsystem/input_latency_and_snac.md) | Input Latency & SNAC |
 | [fpga_loading.md](06_fpga_subsystem/fpga_loading.md) | RBF bitstream loading: FPGA Manager state machine |
 
 #### 07 — FPGA Cores Architecture
 | File | Topic |
 |---|---|
-| [template_walkthrough.md](07_fpga_cores_architecture/template_walkthrough.md) | Step-by-step guide to building a core from `Template_MiSTer` |
-| [build/overview.md](07_fpga_cores_architecture/build/overview.md) | FPGA build pipeline: QPF → Synthesis → Fitter → Assembler → RBF |
+| [template_walkthrough.md](07_fpga_cores_architecture/template_walkthrough.md) | **Deep** — Step-by-step guide to building a core from `Template_MiSTer` |
+| [build/overview.md](07_fpga_cores_architecture/build/overview.md) | **Deep** — Quartus compilation: QPF/QSF, TCL automation, RBF generation, CI/CD, seed sweeping |
 
 #### 08 — FPGA Cores Catalog
 | File | Topic |
 |---|---|
-| [minimig.md](08_fpga_cores_catalog/minimig.md) | Amiga OCS/ECS/AGA — → [Amiga Bootcamp](https://github.com/alfishe/amiga-bootcamp) |
-| [ao486.md](08_fpga_cores_catalog/ao486.md) | 486SX soft CPU, IDE/CD-ROM DMA, VGA, Sound Blaster |
+| [arcade_and_mra.md](08_fpga_cores_catalog/arcade_and_mra.md) | **Deep** — MRA XML schema, ROM assembly pipeline, DIP switches, NVRAM |
+| [minimig.md](08_fpga_cores_catalog/minimig.md) | **Deep** — Amiga OCS/ECS/AGA, dual CPU, Agnus DMA, Denise pipeline, Gary decode, Zorro II/III autoconfig, RTG, IDE FIFO, CD32 |
+| [ao486.md](08_fpga_cores_catalog/ao486.md) | **Deep** — 486SX soft CPU, Sound Blaster 16, SVGA, IDE/CD-ROM |
+| [ao486_networking.md](08_fpga_cores_catalog/ao486_networking.md) | **Adequate** — UART SLIP networking, MiSTerFS shared folder, DOS/Windows/Linux guest setup |
 | [nes.md](08_fpga_cores_catalog/nes.md) | NES: mappers, PPU/APU, iNES/NES 2.0 |
 | [snes.md](08_fpga_cores_catalog/snes.md) | SNES: GSU/SA-1/SDD-1/DSP coprocessors |
 | [genesis.md](08_fpga_cores_catalog/genesis.md) | Genesis: 68000+Z80, VDP, YM2612, Mega CD, 32X |
 | [psx.md](08_fpga_cores_catalog/psx.md) | PSX: R3000A, GTE, GPU, MDEC, CD-ROM, CHD |
 | [n64.md](08_fpga_cores_catalog/n64.md) | N64: VR4300, RDP/RSP, 8MB RDRAM |
-| [arcade_and_mra.md](08_fpga_cores_catalog/arcade_and_mra.md) | Arcade cores: MRA XML, ROM merging, DIP switches |
 
 ---
 
@@ -142,7 +151,9 @@
 | [ascal_deep_dive.md](09_video_audio/ascal_deep_dive.md) | **Deep** architectural analysis of the Avalon Scaler |
 | [ascal_architecture.md](09_video_audio/ascal_architecture.md) | Overview of the VHDL and SystemVerilog scaler implementations |
 | [polyphase_scaling_theory.md](09_video_audio/polyphase_scaling_theory.md) | Mathematical foundations of polyphase video scaling |
-| [audio_pipeline_overview.md](09_video_audio/audio_pipeline_overview.md) | Sigma-delta DAC, I2S interfacing, and audio mixing |
+| [video_mixer_deep_dive.md](09_video_audio/video_mixer_deep_dive.md) | **Deep** — Video freezer, gamma correction, scandoubler, Hq2x |
+| [analog_direct_video_architecture.md](09_video_audio/analog_direct_video_architecture.md) | **Deep** — Direct Video, RGB→YPbPr, NTSC/PAL composite, IO board DAC |
+| [audio_pipeline_deep_dive.md](09_video_audio/audio_pipeline_deep_dive.md) | **Deep** — Audio pipeline: IIR filter, DC blocker, ALSA mixer, I2S/SPDIF/ΣΔ DAC |
 
 #### 10 — Input Devices
 | File | Topic |
@@ -150,7 +161,7 @@
 | [keyboard.md](10_input_devices/keyboard.md) | PS/2 keyboard emulation via USB HID |
 | [mouse.md](10_input_devices/mouse.md) | PS/2 mouse emulation |
 | [joystick.md](10_input_devices/joystick.md) | Joystick/gamepad handling, analog sticks, autofire |
-| [snac_llapi.md](10_input_devices/snac_llapi.md) | SNAC & LLAPI: direct controller wiring to FPGA fabric |
+| [snac_llapi.md](10_input_devices/snac_llapi.md) | **Deep** — SNAC direct controller wiring, OEM protocols, LLAPI wireless |
 
 #### 11 — Storage
 | File | Topic |
@@ -171,13 +182,13 @@
 #### 13 — Save States
 | File | Topic |
 |---|---|
-| [save_state_architecture.md](13_save_states/save_state_architecture.md) | DDR3 snapshot/restore, SSPI protocol, rewind |
+| [save_state_architecture.md](13_save_states/save_state_architecture.md) | **Deep** — DDR3 shared-memory save states, CONF_STR SS tag, process_ss() polling, 4-slot system, sector I/O |
 
 #### 14 — Extensions
 | File | Topic |
 |---|---|
 | [retroachievements.md](14_extensions/retroachievements.md) | RetroAchievements: odelot fork, DDRAM bridge, rcheevos |
-| [cheats.md](14_extensions/cheats.md) | Cheat engine, .cht format |
+| [cheats.md](14_extensions/cheats.md) | **Adequate** — Cheat engine: ZIP discovery, Game Genie/PAR, FIO index 255, arcade MRA cheats |
 | [mra_format.md](14_extensions/mra_format.md) | MRA XML schema, ROM merging |
 
 #### 15 — Ecosystem

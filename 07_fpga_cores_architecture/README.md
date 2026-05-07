@@ -4,9 +4,8 @@ This section documents the internal architectural patterns and logic designs of 
 
 ## Articles
 
-*   *(Coming Soon: CPU Bus Arbitration Patterns)*
-*   *(Coming Soon: Video Generation Logic - Scanline vs. Buffer)*
-*   *(Coming Soon: Sound Chip Implementation Hazards)*
+* [**Template Walkthrough**](template_walkthrough.md) — Step-by-step guide to building a core from `Template_MiSTer`: repository structure, emu module, CONF_STR, video/audio/memory contracts, common pitfalls
+* [**Build Pipeline**](build/overview.md) — Quartus compilation: QPF/QSF structure, TCL automation, RBF generation, CI/CD, seed sweeping
 
 ## Reference Documentation
 Before developing a core, you must understand the MiSTer framework:

@@ -95,14 +95,14 @@ the LUT entry change — that is the entire mechanism.
 
 ```mermaid
 graph LR
-    A["Output pixel\nrequest (x,y)"] --> B["Phase Accumulator\nstep = src_w ÷ dst_w"]
-    B --> C["Integer part\n→ center source\npixel P0"]
-    B --> D["Fractional part\n→ phase index 0..15"]
-    C --> E["Line buffer\nP-1  P0  P1  P2"]
-    D --> F["Block RAM lookup\nweights: C-1 C0 C1 C2"]
-    E --> G["Multiply-Accumulate\nΣ Pᵢ × Cᵢ"]
+    A["Output pixel<br/>request (x,y)"] --> B["Phase Accumulator<br/>step = src_w ÷ dst_w"]
+    B --> C["Integer part<br/>→ center source<br/>pixel P0"]
+    B --> D["Fractional part<br/>→ phase index 0..15"]
+    C --> E["Line buffer<br/>P-1  P0  P1  P2"]
+    D --> F["Block RAM lookup<br/>weights: C-1 C0 C1 C2"]
+    E --> G["Multiply-Accumulate<br/>Σ Pᵢ × Cᵢ"]
     F --> G
-    G --> H["Output\npixel"]
+    G --> H["Output<br/>pixel"]
 ```
 
 ---
@@ -330,12 +330,12 @@ Dark pixel at scanline gap:        [  0,    4,   0,   0 ]  ← nearly black (tig
 
 ```mermaid
 graph TD
-    A["Input pixel arrives"] --> B["Sample luminance\n0..255"]
-    B --> C{"poly_lum\nlookup table"}
-    C -->|"dark  lum < 64"| D["Bank A\nnarrow kernel\ntight scanline gap"]
-    C -->|"mid  64–192"| E["Bank B\nstandard kernel"]
-    C -->|"bright  lum > 192"| F["Bank C\nwide kernel\nbloom into gap"]
-    D --> G["Phase LUT read\n+ Multiply-Accumulate"]
+    A["Input pixel arrives"] --> B["Sample luminance<br/>0..255"]
+    B --> C{"poly_lum<br/>lookup table"}
+    C -->|"dark  lum < 64"| D["Bank A<br/>narrow kernel<br/>tight scanline gap"]
+    C -->|"mid  64–192"| E["Bank B<br/>standard kernel"]
+    C -->|"bright  lum > 192"| F["Bank C<br/>wide kernel<br/>bloom into gap"]
+    D --> G["Phase LUT read<br/>+ Multiply-Accumulate"]
     E --> G
     F --> G
     G --> H["Output pixel"]
@@ -353,11 +353,11 @@ The coefficient table lives in a small Block RAM inside the FPGA. The MiSTer HPS
 
 ```mermaid
 graph LR
-    A["User selects\n.txt filter in OSD"] --> B["MiSTer Main\nparses matrix"]
-    B --> C["Convert to\n10-bit signed\nfixed-point"]
-    C --> D["HPS writes via\nAvalon-MM\npoly_xxx interface"]
-    D --> E["Block RAM\npoly_mem updated"]
-    E --> F["ascal uses new\nkernel table on\nnext frame boundary"]
+    A["User selects<br/>.txt filter in OSD"] --> B["MiSTer Main<br/>parses matrix"]
+    B --> C["Convert to<br/>10-bit signed<br/>fixed-point"]
+    C --> D["HPS writes via<br/>Avalon-MM<br/>poly_xxx interface"]
+    D --> E["Block RAM<br/>poly_mem updated"]
+    E --> F["ascal uses new<br/>kernel table on<br/>next frame boundary"]
 ```
 
 **User workflow:**

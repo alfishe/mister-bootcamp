@@ -103,6 +103,8 @@ Always include a source comment on the first line:
 
 Use **Mermaid** for all diagrams. Every architectural article must contain at least one.
 
+**Important Syntax Rule**: Do NOT use `\n` for line breaks inside Mermaid nodes or edge labels. The GitHub Markdown renderer may fail to parse them or throw syntax errors. Instead, use HTML line breaks `<br/>`.
+
 Preferred diagram types:
 | Use case | Mermaid type |
 |---|---|

@@ -6,6 +6,9 @@
 
 ## Articles
 
+* [**sys_top.v — Top-Level Hardware Abstraction**](sys_top.md) — Deep dive into the root synthesis entity: ports, submodule map, SSPI command decoder, video/audio/memory pipelines, conditional compilation
+* [**hps_io.sv — Core-Side Command Demultiplexer**](hps_io_module.md) — UIO command decoder, file I/O engine, joystick/keyboard/mouse, CONF_STR, status word, SD card, EXT_BUS
+* [**DDR3 Architecture: F2SDRAM, sysmem_lite & ddram**](ddr3_architecture.md) — F2SDRAM bridge, safe terminator, ddr_svc arbiter, ddram.sv wrapper, ddram_ctrl.v cached controller, HPS bridge management
 * [Framework Architecture & Overview](fpga_framework_overview.md)
 * [HPS Bridge Reference (SSPI & Control)](hps_bridge_reference.md)
 * [Video & Audio Pipelines](video_audio_pipelines.md)

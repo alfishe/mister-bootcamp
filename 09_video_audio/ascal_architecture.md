@@ -117,5 +117,6 @@ A standard instantiation of the polyphase scaler on the DE10-Nano consumes:
 For detailed implementation logic, state machines, and mathematical foundations, please refer to the following expanded documents:
 
 - [ASCAL Deep Dive & FSM Reference](ascal_deep_dive.md) — Comprehensive logic, clock domains, and architectural block/Mermaid diagrams.
+- [Video Mixer Deep Dive](video_mixer_deep_dive.md) — The upstream pipeline that feeds ascal's input; includes dual-path signal chain and video_mixer↔ascal interaction analysis
 - [Polyphase Scaling Theory](polyphase_scaling_theory.md) — Mathematical foundations and filter coefficient definitions.
 - [Video/Audio Pipelines](../06_fpga_subsystem/video_audio_pipelines.md) — How the scaler fits into the broader MiSTer video subsystem.

@@ -1716,6 +1716,7 @@ r.b = $signed({1'b0, p1}) - $signed({1'b0, pm});
 
 ## Appendix B: Related Documentation
 
+- [Video Mixer Deep Dive](video_mixer_deep_dive.md) — The upstream signal conditioning pipeline (freeze, gamma, scandoubler) that feeds ascal's input; includes full dual-path signal chain diagram and video_mixer↔ascal interaction analysis
 - [Polyphase Scaling Theory](polyphase_scaling_theory.md) — Mathematical foundations
 - [Video/Audio Pipelines](../06_fpga_subsystem/video_audio_pipelines.md) — System integration
 - [HPS Bus Protocol](../06_fpga_subsystem/hps_bus.md) — Avalon interface details
