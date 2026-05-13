@@ -1,4 +1,4 @@
-[← Storage](../README.md)
+[← Storage](README.md) · [↑ Knowledge Base](../README.md)
 
 # Floppy Disk Emulation (FDD)
 
@@ -232,3 +232,14 @@ sector-addressed file of 901120 bytes (880 KB).
 The core's custom Amiga FDC logic converts the MFM track request into an
 LBA address and asserts `sd_rd`.  The sector data returned is re-serialised
 into MFM by the FPGA.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| HDD/IDE emulation | [HDD/IDE Emulation](hdd_ide_emulation.md) |
+| ROM/file download stream | [File Transfer](file_transfer.md) |
+| UIO SD card opcodes | [UIO Command Reference](../17_references/uio_command_reference.md) |
+| hps_io SD block | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |

@@ -1,4 +1,4 @@
-[← Storage](../README.md)
+[← Storage](README.md) · [↑ Knowledge Base](../README.md)
 
 # ROM / File Download Stream (`ioctl_*`)
 
@@ -218,3 +218,16 @@ or screenshots:
 3. HPS starts an upload transfer (`FIO_FILE_TX` with `0xAA`).
 4. On each `FIO_FILE_TX_DAT`, the FPGA reads `ioctl_din` and asserts `ioctl_rd`.
 5. Core increments internal pointer; HPS writes received data to file.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| Floppy disk emulation | [Floppy Emulation](floppy_emulation.md) |
+| HDD/IDE emulation | [HDD/IDE Emulation](hdd_ide_emulation.md) |
+| UIO FIO opcodes | [UIO Command Reference](../17_references/uio_command_reference.md) |
+| hps_io File I/O engine | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |
+| Save state architecture | [Save State Architecture](../13_save_states/save_state_architecture.md) |
+| Cheat file delivery | [Cheat Engine](../14_extensions/cheats.md) |

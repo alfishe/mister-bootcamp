@@ -1,4 +1,4 @@
-[← Input Devices](../README.md)
+[← Input Devices](README.md) · [↑ Knowledge Base](../README.md)
 
 # Mouse Path: Linux evdev → PS/2 Bytes → FPGA
 
@@ -179,3 +179,15 @@ UIO_MOUSE:
 The Minimig core's internal mouse hardware reads `kbd_mouse_type` to route
 data to the X/Y counters or button register, and `kbd_mouse_level` as an
 edge-detect trigger.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| Keyboard input path | [Keyboard](keyboard.md) |
+| Joystick input path | [Joystick](joystick.md) |
+| SNAC direct wiring | [SNAC & LLAPI](snac_llapi.md) |
+| UIO mouse opcodes | [UIO Command Reference](../17_references/uio_command_reference.md) |
+| hps_io mouse decoder | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |

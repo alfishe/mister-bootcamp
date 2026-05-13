@@ -1,4 +1,4 @@
-[← Input Devices](../README.md)
+[← Input Devices](README.md) · [↑ Knowledge Base](../README.md)
 
 # Joystick and Gamepad Path
 
@@ -175,3 +175,16 @@ void user_io_digital_joystick(unsigned char idx, uint32_t map, int autofire)
     // ... send to FPGA
 }
 ```
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| Keyboard input path | [Keyboard](keyboard.md) |
+| Mouse input path | [Mouse](mouse.md) |
+| SNAC direct wiring | [SNAC & LLAPI](snac_llapi.md) |
+| UIO joystick opcodes | [UIO Command Reference](../17_references/uio_command_reference.md) |
+| hps_io joystick decoder | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |
+| Input latency analysis | [Input Latency & SNAC](../06_fpga_subsystem/input_latency_and_snac.md) |

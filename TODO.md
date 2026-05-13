@@ -74,21 +74,21 @@
 | 29| `09_video_audio/analog_video.md` | ✅ | Deep | Superseded by `analog_direct_video_architecture.md` — source-grounded Deep upgrade with vga_out.sv + yc_out.sv |
 | 30| `10_input_devices/snac_llapi.md` | ✅ | Deep | SNAC hardware interface, per-core OEM protocols (NES/SNES/Genesis/PSX/N64), LLAPI wireless, 74LVC245 level shifting |
 | 31| `11_storage/file_transfer.md` | 🔀 | Target: Adequate | VHD mounting, SD card |
-| 32| `12_networking/wifi_setup.md` | 📋 | Target: Adequate | WiFi, SSH, FTP, Samba |
+| 32| `12_networking/wifi_setup.md` | ✅ | Adequate | WiFi adapter setup, SSH/FTP/SFTP, Samba, CIFS/NFS mount, Tailscale VPN |
 
 ## Phase 5 — Features, Ecosystem & Reference
 
 | # | Article | Status | Quality | Notes |
 |---|---|---|---|---|
 | 33| `13_save_states/save_state_architecture.md` | ✅ | Deep | DDR3 shared-memory save states, CONF_STR SS tag, process_ss() 4-slot polling, sector I/O alternative, per-core implementations |
-| 34| `14_extensions/retroachievements.md` | 📋 | Target: Deep | odelot fork, DDRAM bridge, rcheevos |
+| 34| `14_extensions/retroachievements.md` | ✅ | Deep | odelot fork, DDRAM bridge (Full Mirror / Selective Address), rcheevos SDK, 14 supported cores |
 | 35| `14_extensions/cheats.md` | ✅ | Adequate | Cheat engine: ZIP/CRC discovery, Game Genie/PAR formats, FIO index 255 delivery, arcade MRA cheats, N64 cheat system, lazy loading |
 | 36| `14_extensions/mra_format.md` | ✅ | Deep | Superseded by `arcade_and_mra.md` (620 lines Deep article in 08 catalog) |
 | 37| `15_ecosystem/README.md` | 🔀 | Target: Adequate | Project catalog index: alternative platforms, commercial products, tools, content |
-| 37a| `15_ecosystem/update_scripts.md` | 📋 | Target: Adequate | update_all, downloader |
-| 38| `16_advanced_topics/mistex.md` | 📋 | Target: Adequate | SBC+FPGA alternative platform port |
-| 39| `16_advanced_topics/analogue_comparison.md` | 📋 | Target: Adequate | openFPGA vs MiSTer |
-| 40| `17_references/uio_command_reference.md` | 🔀 | Target: Adequate | Command reference |
+| 37a| `15_ecosystem/update_scripts.md` | ✅ | Adequate | Update All settings UI, Downloader JSON manifest, PC Launcher, file download flow |
+| 38| `16_advanced_topics/mistex.md` | ✅ | Adequate | SBC+FPGA alternative: SPI-over-GPIO vs HPS bus, supported hardware, core compatibility |
+| 39| `16_advanced_topics/analogue_comparison.md` | ✅ | Adequate | openFPGA vs MiSTer: architecture, core ecosystem, developer experience, latency |
+| 40| `17_references/uio_command_reference.md` | ✅ | Adequate | Protocol diagram, full opcode tables, joystick bit mapping, CONF_STR format, cross-refs |
 
 ---
 
@@ -99,19 +99,19 @@ Files from `/Volumes/TB4-4Tb/Projects/mister/doc/existing/` to be migrated:
 | Source | Target | Status | Notes |
 |---|---|---|---|
 | `overview.md` | `00_overview/platform_architecture.md` | ✅ | Replaced by new platform architecture |
-| `hps-bus.md` | `06_fpga_subsystem/hps_bus.md` | 🔀 | Copied and breadcrumb added |
-| `spi-protocol.md` | `06_fpga_subsystem/spi_protocol.md` | 🔀 | Copied and breadcrumb added |
+| `hps-bus.md` | `06_fpga_subsystem/hps_bus.md` | ✅ | Superseded by `hps_io_module.md` and `hps_bridge_reference.md` |
+| `spi-protocol.md` | `06_fpga_subsystem/spi_protocol.md` | ✅ | Superseded by `hps_io_module.md` and `hps_bridge_reference.md` |
 | `core-configuration.md` | `05_configuration/` | ✅ | Split into `conf_str.md` and `mister_ini_guide.md` |
-| `command-reference.md` | `17_references/uio_command_reference.md` | 🔀 | Copied and breadcrumb added |
-| `memory-map.md` | `02_hardware_platforms/memory_map.md` | 🔀 | Copied and breadcrumb added |
-| `fpga-loading.md` | `06_fpga_subsystem/fpga_loading.md` | 🔀 | Copied and breadcrumb added |
-| `keyboard.md` | `10_input_devices/keyboard.md` | 🔀 | Copied and breadcrumb added |
-| `mouse.md` | `10_input_devices/mouse.md` | 🔀 | Copied and breadcrumb added |
-| `joystick.md` | `10_input_devices/joystick.md` | 🔀 | Copied and breadcrumb added |
-| `fdd.md` | `11_storage/floppy_emulation.md` | 🔀 | Copied and breadcrumb added |
-| `hdd-ide.md` | `11_storage/hdd_ide_emulation.md` | 🔀 | Copied and breadcrumb added |
-| `file-transfer.md` | `11_storage/file_transfer.md` | 🔀 | Copied and breadcrumb added |
-| `osd.md` | `05_configuration/osd.md` | 🔀 | Copied and breadcrumb added |
+| `command-reference.md` | `17_references/uio_command_reference.md` | ✅ | Expanded with protocol diagram, joystick mapping, cross-refs |
+| `memory-map.md` | `02_hardware_platforms/memory_map.md` | ✅ | Breadcrumb + cross-refs added |
+| `fpga-loading.md` | `06_fpga_subsystem/fpga_loading.md` | ✅ | Breadcrumb + cross-refs added |
+| `keyboard.md` | `10_input_devices/keyboard.md` | ✅ | Breadcrumb + cross-refs added |
+| `mouse.md` | `10_input_devices/mouse.md` | ✅ | Breadcrumb + cross-refs added |
+| `joystick.md` | `10_input_devices/joystick.md` | ✅ | Breadcrumb + cross-refs added |
+| `fdd.md` | `11_storage/floppy_emulation.md` | ✅ | Breadcrumb + cross-refs added |
+| `hdd-ide.md` | `11_storage/hdd_ide_emulation.md` | ✅ | Breadcrumb + cross-refs added |
+| `file-transfer.md` | `11_storage/file_transfer.md` | ✅ | Breadcrumb + cross-refs added |
+| `osd.md` | `05_configuration/osd.md` | ✅ | Superseded by new Deep OSD article |
 | Linux/Buildroot docs | `03_hps_linux/` | 🔀 | Copied |
 | U-Boot patches | `03_hps_linux/uboot_patches/` | 🔀 | Copied |
 

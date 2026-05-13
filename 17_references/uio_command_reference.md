@@ -1,4 +1,4 @@
-[← References](../README.md)
+[← References](README.md) · [↑ Knowledge Base](../README.md)
 
 # UIO Command Reference
 
@@ -6,10 +6,45 @@ All HPS→FPGA communication for peripheral events uses a command-based protocol
 over the SPI-over-GPO bus.  Each transaction starts with a **command opcode**
 (one 16-bit word) followed by zero or more data words.
 
-The FPGA-side handler is `hps_io.sv` (`uio_block` always block).
-The HPS-side sender is `user_io.cpp` / `spi.cpp`.
+The FPGA-side handler is [`hps_io.sv`](https://github.com/MiSTer-devel/Template_MiSTer/blob/master/sys/hps_io.sv) (`uio_block` always block).
+The HPS-side sender is [`user_io.cpp`](https://github.com/MiSTer-devel/Main_MiSTer/blob/master/user_io.cpp) / `spi.cpp`.
 
-Source: `Main_MiSTer/user_io.h`, `hps_io.sv`
+Source: `Main_MiSTer/user_io.h`, `Template_MiSTer/sys/hps_io.sv`
+
+---
+
+## Protocol Overview
+
+```mermaid
+sequenceDiagram
+    participant HPS as HPS (user_io.cpp)
+    participant SPI as SSPI Bus
+    participant FPGA as FPGA (hps_io.sv)
+
+    Note over HPS,FPGA: Each command = opcode word + N data words
+
+    HPS->>SPI: Assert io_enable + opcode (16-bit)
+    SPI->>FPGA: Latch command into cmd_byte
+
+    alt HPS → FPGA (write)
+        HPS->>SPI: Data word 1
+        SPI->>FPGA: io_din latched, byte_cnt++
+        HPS->>SPI: Data word 2 ...
+        SPI->>FPGA: io_din latched
+    else FPGA → HPS (read)
+        FPGA->>SPI: Drive io_dout
+        SPI->>HPS: Read response word
+    end
+
+    HPS->>SPI: Deassert io_enable
+    Note over FPGA: Command complete
+```
+
+> [!NOTE]
+> The opcode space is split across two decoders: `hps_io.sv` handles core-facing commands
+> (joystick, keyboard, SD, file I/O), while `sys_top.v` handles framework commands (video timing,
+> scaler, audio filters). They operate on different chip-select channels so opcode numbers can
+> overlap without conflict.
 
 ---
 
@@ -159,3 +194,80 @@ String format (semicolon-delimited entries):
 "T[0],Reset;"              ← trigger (momentary)
 "V,vDATE"                  ← version string
 ```
+
+See [CONF_STR Deep Dive](../05_configuration/conf_str.md) for full string format,
+parse_config() behavior, and status bit allocation.
+
+---
+
+## Joystick Bit Mapping
+
+Each 32-bit `joystick_N` word (sent as two 16-bit words via `UIO_JOYSTICK0`–`UIO_JOYSTICK5`)
+maps to the following button layout:
+
+| Bit | Button | Bit | Button |
+|---|---|---|---|
+| `[0]` | Up | `[16]` | L1 (shoulder) |
+| `[1]` | Down | `[17]` | R1 (shoulder) |
+| `[2]` | Left | `[18]` | L2 (trigger) |
+| `[3]` | Right | `[19]` | R2 (trigger) |
+| `[4]` | Button 1 / A | `[20]` | L3 (stick press) |
+| `[5]` | Button 2 / B | `[21]` | R3 (stick press) |
+| `[6]` | Button 3 / X | `[22:31]` | Reserved / extended |
+| `[7]` | Button 4 / Y | | |
+| `[8]` | Button 5 | | |
+| `[9]` | Button 6 | | |
+| `[10]` | Start | | |
+| `[11]` | Select | | |
+| `[12]` | Option / Menu | | |
+
+### Analog Sticks
+
+Left analog (`UIO_ASTICK` 0x1A): `joystick_l_analog_N[15:0]` = `{Y[7:0], X[7:0]}`, signed -127..+127.
+Right analog (`UIO_ASTICK_2` 0x3D): same format, separate register.
+
+### Rumble
+
+Cores request rumble via `joystick_N_rumble[15:0]`:
+
+| Bits | Meaning |
+|---|---|
+| `[15:8]` | Large motor magnitude (0=off, 255=max) |
+| `[7:0]` | Small motor magnitude |
+
+---
+
+## Status Word (128-bit)
+
+The 128-bit `status[127:0]` register is populated by `UIO_SET_STATUS2` (0x1E) and read
+back by `UIO_GET_STATUS` (0x29). Common bit allocation:
+
+| Bits | Common Usage | Notes |
+|---|---|---|
+| `[0]` | Reset | Triggered by `T[0]` or `R[0]` |
+| `[1]` | Button 2 | Often used as OSD exit |
+| `[2]` | NTSC/PAL | TV mode selection |
+| `[4:3]` | Low-bit options | Often video filters |
+| `[122:121]` | Aspect ratio | Framework standard |
+| `[127:123]` | Reserved | Framework use |
+
+See [Template Walkthrough — Status Word](../07_fpga_cores_architecture/template_walkthrough.md) for
+per-core allocation guidance.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| HPS↔FPGA bus architecture | [HPS Bus](../06_fpga_subsystem/hps_bus.md) |
+| SSPI protocol details | [SPI Protocol](../06_fpga_subsystem/spi_protocol.md) |
+| `hps_io.sv` deep dive | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |
+| CONF_STR format & parsing | [CONF_STR Deep Dive](../05_configuration/conf_str.md) |
+| OSD rendering | [OSD Architecture](../05_configuration/osd.md) |
+| Joystick hardware | [Joystick](../10_input_devices/joystick.md) |
+| Keyboard hardware | [Keyboard](../10_input_devices/keyboard.md) |
+| Mouse hardware | [Mouse](../10_input_devices/mouse.md) |
+| SD card / floppy emulation | [Floppy Emulation](../11_storage/floppy_emulation.md) |
+| Save state SS tag | [Save State Architecture](../13_save_states/save_state_architecture.md) |
+| Core template setup | [Template Walkthrough](../07_fpga_cores_architecture/template_walkthrough.md) |

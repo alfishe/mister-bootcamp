@@ -1,4 +1,4 @@
-[← Storage](../README.md)
+[← Storage](README.md) · [↑ Knowledge Base](../README.md)
 
 # Hard Disk / ATA Emulation (HDD / IDE)
 
@@ -256,3 +256,15 @@ struct drive_t {
 
 HDD images use standard CHS-to-LBA translation internally; cores only
 see LBA addressing.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| Floppy disk emulation | [Floppy Emulation](floppy_emulation.md) |
+| ROM/file download stream | [File Transfer](file_transfer.md) |
+| ao486 core | [ao486](../08_fpga_cores_catalog/ao486.md) |
+| Minimig core | [Minimig](../08_fpga_cores_catalog/minimig.md) |
+| Memory map | [Memory Map](../02_hardware_platforms/memory_map.md) |

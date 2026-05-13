@@ -1,4 +1,4 @@
-[← Hardware Platforms](../README.md)
+[← Hardware Platforms](README.md) · [↑ Knowledge Base](../README.md)
 
 # Cyclone V SoC Physical Memory Map
 
@@ -129,3 +129,14 @@ map_base = mmap(0, FPGA_REG_SIZE, PROT_READ|PROT_WRITE,
 
 This single mapping covers GPO/GPI, FPGA Manager, LW-AXI window,
 NIC-301, Reset Manager, and System Manager — all within the 16 MB window.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| DE10-Nano board specs | [DE10-Nano Reference](de10_nano.md) |
+| FPGA bitstream loading | [FPGA Loading](../06_fpga_subsystem/fpga_loading.md) |
+| HPS↔FPGA bus architecture | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |
+| DDR3 memory architecture | [DDR3 Architecture](../06_fpga_subsystem/ddr3_architecture.md) |

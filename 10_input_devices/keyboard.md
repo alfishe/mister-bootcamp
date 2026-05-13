@@ -1,4 +1,4 @@
-[← Input Devices](../README.md)
+[← Input Devices](README.md) · [↑ Knowledge Base](../README.md)
 
 # Keyboard Path: Linux evdev → PS/2 Emulation → FPGA
 
@@ -196,3 +196,15 @@ UIO_KEYBOARD:
 
 The Amiga keyboard hardware receives the Amiga raw key codes directly —
 no PS/2 emulation layer is involved on that path.
+
+---
+
+## Cross-References
+
+| Topic | Article |
+|---|---|
+| Mouse input path | [Mouse](mouse.md) |
+| Joystick input path | [Joystick](joystick.md) |
+| SNAC direct wiring | [SNAC & LLAPI](snac_llapi.md) |
+| UIO keyboard opcodes | [UIO Command Reference](../17_references/uio_command_reference.md) |
+| hps_io keyboard decoder | [hps_io Module](../06_fpga_subsystem/hps_io_module.md) |
