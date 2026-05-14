@@ -59,11 +59,11 @@
 | 19| `08_fpga_cores_catalog/arcade_and_mra.md` | ✅ | Deep | MRA XML schema, ROM assembly pipeline, interleave/map, DIP switches, NVRAM, MGL format, Joteco framework |
 | 20| `08_fpga_cores_catalog/minimig.md` | ✅ | Deep | Amiga OCS/ECS/AGA emulation, DDR3 Fast RAM via ddram_ctrl.v, RTG, a314 shared folder, CD32 |
 | 21| `08_fpga_cores_catalog/ao486.md` | ✅ | Deep | 486SX soft CPU, Sound Blaster 16/OPL3, SVGA, IDE/CD-ROM, UART networking, DOS/Windows compat |
-| 22| `08_fpga_cores_catalog/nes.md` | 📋 | Target: Adequate | Mappers, PPU/APU, iNES/NES 2.0 |
-| 23| `08_fpga_cores_catalog/snes.md` | 📋 | Target: Adequate | Coprocessors, 5A22/S-PPU/S-SMP |
-| 24| `08_fpga_cores_catalog/genesis.md` | 📋 | Target: Adequate | 68000+Z80, VDP, YM2612, Mega CD, 32X |
-| 25| `08_fpga_cores_catalog/psx.md` | 📋 | Target: Adequate | R3000A, GTE, GPU, MDEC, CD-ROM |
-| 26| `08_fpga_cores_catalog/n64.md` | 📋 | Target: Adequate | VR4300, RDP/RSP, 8MB RDRAM |
+| 22| `08_fpga_cores_catalog/nes.md` | ✅ | Adequate | 2A03 CPU+APU, 2C02 PPU, 200+ mappers, FDS, expansion audio, iNES/NES 2.0 |
+| 23| `08_fpga_cores_catalog/snes.md` | ✅ | Adequate | 5A22 CPU, dual S-PPU, S-SMP, DSP/Super FX/SA-1/S-DD1/CX4/SPC7110 coprocessors, MSU-1 |
+| 24| `08_fpga_cores_catalog/genesis.md` | ✅ | Adequate | 68000+Z80, YM7101 VDP, YM2612/YM3438, SVP, Nuked MD alternative |
+| 25| `08_fpga_cores_catalog/psx.md` | ✅ | Adequate | R3000A, GTE, GPU, SPU, MDEC, CD-ROM, DualShock/NeGcon/GunCon input |
+| 26| `08_fpga_cores_catalog/n64.md` | ✅ | Adequate | VR4300i, RSP+RDP, RDRAM, SDRAM requirements, error diagnostics |
 
 ## Phase 4 — Peripherals & I/O (The Interfaces)
 

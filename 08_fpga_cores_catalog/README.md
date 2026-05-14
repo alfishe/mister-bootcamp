@@ -1,13 +1,30 @@
 # 08 — FPGA Cores Catalog
 
-
 [← Back to Index](../README.md)
 
+Detailed articles on MiSTer's major console, computer, and arcade cores.
+
+---
 
 ## Articles
 
-* [**Arcade Cores & MRA Format**](arcade_and_mra.md) — Deep dive into MRA XML schema, ROM assembly pipeline, DIP switches, NVRAM, and the Joteco arcade framework
-* [**Minimig: Amiga OCS/ECS/AGA**](minimig.md) — Dual CPU (fx68k/TG68K), Agnus DMA arbitration, Denise pipeline, Paula audio/FDC, Gary address decode, Zorro II/III autoconfig, RTG, IDE FIFO, CD32 Akiko
-* [**ao486: 486SX Soft CPU**](ao486.md) — 486SX soft CPU, Sound Blaster 16, SVGA, IDE/CD-ROM, DOS/Windows compatibility
-* [**ao486: Networking & File Sharing**](ao486_networking.md) — UART SLIP networking, MiSTerFS shared-memory file system, DOS/Windows/Linux guest setup
+| File | Topic | Quality |
+|---|---|---|
+| [arcade_and_mra.md](arcade_and_mra.md) | Arcade cores, MRA XML schema, ROM assembly, DIP switches, Joteco framework | Deep |
+| [minimig.md](minimig.md) | Amiga OCS/ECS/AGA: dual CPU, Agnus DMA, Denise, Paula, Gary, RTG, CD32 | Deep |
+| [ao486.md](ao486.md) | 486SX soft CPU, Sound Blaster 16, SVGA, IDE/CD-ROM | Deep |
+| [ao486_networking.md](ao486_networking.md) | UART SLIP networking, MiSTerFS shared-memory file system | Deep |
+| [nes.md](nes.md) | NES/Famicom: 2A03 CPU+APU, 2C02 PPU, 200+ mappers, FDS, expansion audio | Adequate |
+| [snes.md](snes.md) | SNES: 5A22 CPU, dual S-PPU, S-SMP audio, DSP/Super FX/SA-1 coprocessors | Adequate |
+| [genesis.md](genesis.md) | Mega Drive/Genesis: 68000+Z80, YM7101 VDP, YM2612 FM, SVP, Nuked MD | Adequate |
+| [psx.md](psx.md) | PlayStation: R3000A, GTE, GPU, SPU, MDEC, CD-ROM | Adequate |
+| [n64.md](n64.md) | Nintendo 64: VR4300i, RSP+RDP, RDRAM, 4–8 MB | Adequate |
+
+---
+
+## Related Sections
+
+* [07 — Cores Architecture](../07_fpga_cores_architecture/README.md) — Core template, build system
+* [06 — FPGA Subsystem](../06_fpga_subsystem/README.md) — `hps_io.sv`, SDRAM/DDR3, memory controllers
+* [09 — Video / Audio](../09_video_audio/README.md) — HDMI scaler, analog video, audio pipeline
 
