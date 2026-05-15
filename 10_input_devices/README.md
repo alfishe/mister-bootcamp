@@ -14,6 +14,7 @@ Input paths from USB/BT peripherals through the HPS to the FPGA core.
 | [joystick.md](joystick.md) | USB gamepad → 32-bit digital word, analog sticks, rumble, button mapping | Adequate |
 | [keyboard.md](keyboard.md) | Linux evdev → PS/2 scan code emulation → FPGA keyboard port | Adequate |
 | [mouse.md](mouse.md) | Linux evdev → PS/2 mouse packet emulation → FPGA mouse port | Adequate |
+| [controller_setup.md](controller_setup.md) | Gamepad setup, button mapping, auto fire, lightgun calibration, troubleshooting | Adequate |
 
 ---
 

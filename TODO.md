@@ -1,6 +1,6 @@
 # MiSTer FPGA Knowledge Base — TODO & Gap Analysis
 
-> **Last updated**: 2026-05-06
+> **Last updated**: 2026-05-07
 >
 > This file tracks every planned article, its current status, quality tier, and priority.
 > See [AGENTS.md](AGENTS.md) for quality tier definitions (Deep / Adequate / Shallow).
@@ -64,6 +64,14 @@
 | 24| `08_fpga_cores_catalog/genesis.md` | ✅ | Adequate | 68000+Z80, YM7101 VDP, YM2612/YM3438, SVP, Nuked MD alternative |
 | 25| `08_fpga_cores_catalog/psx.md` | ✅ | Adequate | R3000A, GTE, GPU, SPU, MDEC, CD-ROM, DualShock/NeGcon/GunCon input |
 | 26| `08_fpga_cores_catalog/n64.md` | ✅ | Adequate | VR4300i, RSP+RDP, RDRAM, SDRAM requirements, error diagnostics |
+| 41| `08_fpga_cores_catalog/gba.md` | ✅ | Adequate | GBA: ARM7TDMI CPU, 240×160 LCD, 4 GB ROM, save types, Robert Peip core |
+| 42| `08_fpga_cores_catalog/gb_gbc.md` | ✅ | Adequate | Game Boy / Game Boy Color: DMG Sharp LR35902, 4-shade LCD, SGB, GBC double-speed |
+| 43| `08_fpga_cores_catalog/c64.md` | ✅ | Adequate | C64: 6510 CPU, VIC-II, SID 6581/8580, PLA, CIA, cartridge types |
+| 44| `08_fpga_cores_catalog/atari_st.md` | ✅ | Adequate | Atari ST/STe: 68000, YM2149, Shifter, Blitter (Mega ST), MSA/ST disk images |
+| 45| `08_fpga_cores_catalog/saturn.md` | ✅ | Adequate | Sega Saturn: dual SH-2, SCU DSP, VDP1/VDP2, SMPC, CD block, cartridge |
+| 46| `08_fpga_cores_catalog/pc_engine.md` | ✅ | Adequate | PC Engine / TG-16 / SuperGrafx: HuC6280 CPU, HuC6260/HuC6270 VDC, CD-ROM² |
+| 47| `08_fpga_cores_catalog/msx.md` | ✅ | Adequate | MSX/MSX2/MSX2+/TurboR: Z80, TMS9918/V9938/V9958 VDP, PSG+SCC+FM-PAC audio |
+| 48| `08_fpga_cores_catalog/neogeo.md` | ✅ | Adequate | Neo Geo: 68000, Z80, LSPC/B1/C1 chipset, 330 ROM slots, memory card |
 
 ## Phase 4 — Peripherals & I/O (The Interfaces)
 
@@ -75,6 +83,9 @@
 | 30| `10_input_devices/snac_llapi.md` | ✅ | Deep | SNAC hardware interface, per-core OEM protocols (NES/SNES/Genesis/PSX/N64), LLAPI wireless, 74LVC245 level shifting |
 | 31| `11_storage/file_transfer.md` | 🔀 | Target: Adequate | VHD mounting, SD card |
 | 32| `12_networking/wifi_setup.md` | ✅ | Adequate | WiFi adapter setup, SSH/FTP/SFTP, Samba, CIFS/NFS mount, Tailscale VPN |
+| 49| `05_configuration/crt_setup.md` | ✅ | Adequate | CRT/analog video setup: 15 kHz, Direct Video, IO board VGA, mister.ini video_mode, scaler bypass |
+| 50| `10_input_devices/controller_setup.md` | ✅ | Adequate | Controller setup & mapping: 8bitdo pairing, USB hub quirks, OSD mapping, gamepad DB |
+| 51| `12_networking/remote_management.md` | ✅ | Adequate | Remote management: mrext web UI, headless operation, phone control, API |
 
 ## Phase 5 — Features, Ecosystem & Reference
 
@@ -85,6 +96,7 @@
 | 35| `14_extensions/cheats.md` | ✅ | Adequate | Cheat engine: ZIP/CRC discovery, Game Genie/PAR formats, FIO index 255 delivery, arcade MRA cheats, N64 cheat system, lazy loading |
 | 36| `14_extensions/mra_format.md` | ✅ | Deep | Superseded by `arcade_and_mra.md` (620 lines Deep article in 08 catalog) |
 | 37| `15_ecosystem/README.md` | 🔀 | Target: Adequate | Project catalog index: alternative platforms, commercial products, tools, content |
+| 52| `15_ecosystem/software_tools.md` | ✅ | Adequate | Ecosystem tools: mrext suite, software ports (ScummVM/DOSBox/PrBoom), system utilities |
 | 37a| `15_ecosystem/update_scripts.md` | ✅ | Adequate | Update All settings UI, Downloader JSON manifest, PC Launcher, file download flow |
 | 38| `16_advanced_topics/mistex.md` | ✅ | Adequate | SBC+FPGA alternative: SPI-over-GPIO vs HPS bus, supported hardware, core compatibility |
 | 39| `16_advanced_topics/analogue_comparison.md` | ✅ | Adequate | openFPGA vs MiSTer: architecture, core ecosystem, developer experience, latency |
@@ -112,8 +124,9 @@ Files from `/Volumes/TB4-4Tb/Projects/mister/doc/existing/` to be migrated:
 | `hdd-ide.md` | `11_storage/hdd_ide_emulation.md` | ✅ | Breadcrumb + cross-refs added |
 | `file-transfer.md` | `11_storage/file_transfer.md` | ✅ | Breadcrumb + cross-refs added |
 | `osd.md` | `05_configuration/osd.md` | ✅ | Superseded by new Deep OSD article |
-| Linux/Buildroot docs | `03_hps_linux/` | 🔀 | Copied |
-| U-Boot patches | `03_hps_linux/uboot_patches/` | 🔀 | Copied |
+| Linux/Buildroot docs | `03_hps_linux/` | ✅ | Breadcrumbs + cross-refs on buildroot/ articles already present |
+| U-Boot patches | `03_hps_linux/uboot_patches/` | ✅ | README index updated with subdirectory table |
+| `03_hps_linux/README.md` | `03_hps_linux/README.md` | ✅ | Article table + subdirectory table with descriptions |
 
 ---
 

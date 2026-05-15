@@ -94,3 +94,4 @@ MiSTer's open-source cores have spawned an entire ecosystem of derived projects 
 | File | Topic |
 |---|---|
 | [update_scripts.md](update_scripts.md) | `update_all`, `downloader`, custom database URLs |
+| [software_tools.md](software_tools.md) | mrext extensions, frontend tools, software ports (ScummVM/DOSBox/PrBoom), system utilities |

@@ -99,6 +99,7 @@
 |---|---|
 | [mister_ini_guide.md](05_configuration/mister_ini_guide.md) | User-facing MiSTer.ini guide: video modes, filters, per-core overrides |
 | [osd.md](05_configuration/osd.md) | OSD rendering pipeline and menu navigation |
+| [crt_setup.md](05_configuration/crt_setup.md) | CRT/analog video setup: IO board vs Direct Video, cables, INI settings |
 | [core_configuration_legacy.md](05_configuration/core_configuration_legacy.md) | Legacy configuration reference (to be split into conf_str + mister_ini) |
 
 ---
@@ -141,6 +142,14 @@
 | [genesis.md](08_fpga_cores_catalog/genesis.md) | Genesis: 68000+Z80, VDP, YM2612, Mega CD, 32X |
 | [psx.md](08_fpga_cores_catalog/psx.md) | PSX: R3000A, GTE, GPU, MDEC, CD-ROM, CHD |
 | [n64.md](08_fpga_cores_catalog/n64.md) | N64: VR4300, RDP/RSP, 8MB RDRAM |
+| [gba.md](08_fpga_cores_catalog/gba.md) | GBA: ARM7TDMI, PPU 6 modes, 2× resolution, GPIO peripherals |
+| [gb_gbc.md](08_fpga_cores_catalog/gb_gbc.md) | Game Boy / Color: LR35902, MBC1–7, SGB borders, link cable |
+| [c64.md](08_fpga_cores_catalog/c64.md) | C64: 6510, VIC-II, SID 6581/8580, 1541 GCR, REU, dual SID |
+| [atari_st.md](08_fpga_cores_catalog/atari_st.md) | Atari ST/STe: 68000, Shifter, Blitter, YM2149, MIDI |
+| [saturn.md](08_fpga_cores_catalog/saturn.md) | Saturn: dual SH-2, VDP1/VDP2, SCSP (WIP/beta) |
+| [pc_engine.md](08_fpga_cores_catalog/pc_engine.md) | PC Engine / TG-16: HuC6280, VDC, CD-ROM², Arcade Card |
+| [msx.md](08_fpga_cores_catalog/msx.md) | MSX/MSX2+/TurboR: Z80/R800, V9938/V9958, SCC+OPLL |
+| [neogeo.md](08_fpga_cores_catalog/neogeo.md) | Neo Geo MVS/AES/CD: LSPC, YM2610, Darksoft ROM sets |
 
 ---
 
@@ -163,6 +172,7 @@
 | [mouse.md](10_input_devices/mouse.md) | PS/2 mouse emulation |
 | [joystick.md](10_input_devices/joystick.md) | Joystick/gamepad handling, analog sticks, autofire |
 | [snac_llapi.md](10_input_devices/snac_llapi.md) | **Deep** — SNAC direct controller wiring, OEM protocols, LLAPI wireless |
+| [controller_setup.md](10_input_devices/controller_setup.md) | Gamepad setup, button mapping, auto fire, lightgun calibration |
 
 #### 11 — Storage
 | File | Topic |
@@ -175,6 +185,7 @@
 | File | Topic |
 |---|---|
 | [wifi_setup.md](12_networking/wifi_setup.md) | USB WiFi, wpa_supplicant, SSH, FTP, Samba |
+| [remote_management.md](12_networking/remote_management.md) | Web remote (mrext), Android app, SSH, Samba, headless operation |
 
 ---
 
@@ -196,6 +207,7 @@
 | File | Topic |
 |---|---|
 | [update_scripts.md](15_ecosystem/update_scripts.md) | `update_all`, `downloader`, custom database URLs |
+| [software_tools.md](15_ecosystem/software_tools.md) | mrext extensions, software ports (ScummVM/DOSBox/PrBoom), system utilities |
 
 #### 16 — Advanced Topics
 | File | Topic |
