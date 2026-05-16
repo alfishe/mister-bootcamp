@@ -1672,6 +1672,8 @@ flowchart LR
 
 When porting `ascal.vhd` to SystemVerilog, key considerations include:
 
+> **Case Study**: For a complete, real-world example of this migration process, see the [VHDL to SV Case Study](https://github.com/alfishe/vhdl-to-sv-casestudy), which documents the full ascal port with architectural decisions and syntax transformations. The case study demonstrates **reference-based co-simulation methodology** (VHDL as golden reference, 142 test cases across 24 categories including interpolation modes, pixel formats, scale factors, stress tests, and fuzz testing), achieving **1.8M+ cycle-accurate pixel comparisons with 0 mismatches**. The verification infrastructure caught critical bugs like pipeline register initialization differences (VHDL `'U'` vs SV `1'b0`) that caused visible artifacts in bilinear mode. The three-phase porting approach (structural → behavioral → verification) and automated regression testing provide a template for rigorous RTL porting between languages.
+
 ### Ascending vs Descending Ranges
 
 ```vhdl
